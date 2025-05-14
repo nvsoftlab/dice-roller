@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class Dice extends StatefulWidget {
   // If you need to pass any initial parameters, define them here
-  const Dice({super.key});
+  final double size;
+  const Dice({super.key, this.size = 150.0});
 
   @override
   // Make the State class public so DiceScreen can use a GlobalKey with it
@@ -78,7 +79,8 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildPip({double size = 24.0}) {
+  Widget _buildPip({double? size}) {
+    size ??= widget.size * 0.12;
     return Container(
       width: size,
       height: size,
@@ -153,8 +155,8 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
     return RotationTransition(
       turns: _rotationAnimation,
       child: Container(
-        width: 150, // Intrinsic size of the dice
-        height: 150,
+        width: widget.size,
+        height: widget.size,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
