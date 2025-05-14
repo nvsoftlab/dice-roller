@@ -1,4 +1,4 @@
-import 'package:dice_roller/widgets/settings/settings_section_layout.dart';
+import 'package:dice_roller/widgets/settings/settings_appearance_section.dart';
 import 'package:flutter/material.dart';
 import 'package:dice_roller/constants/utils.dart';
 
@@ -82,138 +82,152 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings'), centerTitle: true),
-      body: ListView(
-        children: [
-          AppearanceSelector(),
-          _buildSectionTitle(
-            'Dice Settings',
-            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-          ),
-          Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            elevation:
-                0, // Using elevation 0 as per modern design, relying on card color
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
+      appBar: AppBar(title: const Text('Settings')),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+        child: ListView(
+          children: [
+            const SizedBox(height: 16),
+            SettingsAppearanceSection(),
+            _buildSectionTitle(
+              'Dice Settings',
+              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: [
-                      Text(
-                        'Number of Dices',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      const Spacer(),
-                      Text(
-                        '${_numberOfDices.toInt()}',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.deepPurpleAccent,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Slider(
-                    value: _numberOfDices,
-                    min: 1,
-                    max: 10,
-                    divisions: 9,
-                    label: _numberOfDices.round().toString(),
-                    onChanged: (double value) {
-                      setState(() {
-                        _numberOfDices = value;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  _buildSettingRow(
-                    'Dice 1 Type',
-                    _buildDiceTypeDropdown(_dice1Type, (newValue) {
-                      setState(() {
-                        _dice1Type = newValue;
-                      });
-                    }),
-                  ),
-                  const SizedBox(height: 12),
-                  _buildSettingRow(
-                    'Dice 2 Type',
-                    _buildDiceTypeDropdown(_dice2Type, (newValue) {
-                      setState(() {
-                        _dice2Type = newValue;
-                      });
-                    }),
-                  ),
-                  const SizedBox(height: 12),
-                  _buildSettingRow(
-                    'Dice 3 Type',
-                    _buildDiceTypeDropdown(_dice3Type, (newValue) {
-                      setState(() {
-                        _dice3Type = newValue;
-                      });
-                    }),
-                  ),
-                  const SizedBox(height: 12),
-                  _buildSettingRow(
-                    'Dice 4 Type',
-                    _buildDiceTypeDropdown(_dice4Type, (newValue) {
-                      setState(() {
-                        _dice4Type = newValue;
-                      });
-                    }),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          _buildSectionTitle('General'),
-          Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 0,
+            Card(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 16.0,
                 vertical: 8.0,
-              ), // Reduced vertical padding
-              child: Column(
-                children: <Widget>[
-                  _buildSwitchRow('Sound Effects', _soundEffects, (bool value) {
-                    setState(() {
-                      _soundEffects = value;
-                    });
-                  }),
-                  const Divider(height: 1, indent: 16, endIndent: 16),
-                  _buildSwitchRow('Vibration', _vibration, (bool value) {
-                    setState(() {
-                      _vibration = value;
-                    });
-                  }),
-                  const Divider(height: 1, indent: 16, endIndent: 16),
-                  _buildSwitchRow('Keep Screen On', _keepScreenOn, (
-                    bool value,
-                  ) {
-                    setState(() {
-                      _keepScreenOn = value;
-                    });
-                  }),
-                ],
+              ),
+              elevation:
+                  0, // Using elevation 0 as per modern design, relying on card color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Text(
+                          'Number of Dices',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        const Spacer(),
+                        Text(
+                          '${_numberOfDices.toInt()}',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge?.copyWith(
+                            color: Colors.deepPurpleAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Slider(
+                      value: _numberOfDices,
+                      min: 1,
+                      max: 10,
+                      divisions: 9,
+                      label: _numberOfDices.round().toString(),
+                      onChanged: (double value) {
+                        setState(() {
+                          _numberOfDices = value;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    _buildSettingRow(
+                      'Dice 1 Type',
+                      _buildDiceTypeDropdown(_dice1Type, (newValue) {
+                        setState(() {
+                          _dice1Type = newValue;
+                        });
+                      }),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildSettingRow(
+                      'Dice 2 Type',
+                      _buildDiceTypeDropdown(_dice2Type, (newValue) {
+                        setState(() {
+                          _dice2Type = newValue;
+                        });
+                      }),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildSettingRow(
+                      'Dice 3 Type',
+                      _buildDiceTypeDropdown(_dice3Type, (newValue) {
+                        setState(() {
+                          _dice3Type = newValue;
+                        });
+                      }),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildSettingRow(
+                      'Dice 4 Type',
+                      _buildDiceTypeDropdown(_dice4Type, (newValue) {
+                        setState(() {
+                          _dice4Type = newValue;
+                        });
+                      }),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          // Placeholder for the bottom section if needed
-          // Padding(
-          //   padding: const EdgeInsets.all(16.0),
-          //   child: Text('App Version 1.0.0', style: Theme.of(context).textTheme.labelLarge),
-          // ),
-        ],
+
+            _buildSectionTitle('General'),
+            Card(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 0,
+                  vertical: 8.0,
+                ), // Reduced vertical padding
+                child: Column(
+                  children: <Widget>[
+                    _buildSwitchRow('Sound Effects', _soundEffects, (
+                      bool value,
+                    ) {
+                      setState(() {
+                        _soundEffects = value;
+                      });
+                    }),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    _buildSwitchRow('Vibration', _vibration, (bool value) {
+                      setState(() {
+                        _vibration = value;
+                      });
+                    }),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    _buildSwitchRow('Keep Screen On', _keepScreenOn, (
+                      bool value,
+                    ) {
+                      setState(() {
+                        _keepScreenOn = value;
+                      });
+                    }),
+                  ],
+                ),
+              ),
+            ),
+            // Placeholder for the bottom section if needed
+            // Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: Text('App Version 1.0.0', style: Theme.of(context).textTheme.labelLarge),
+            // ),
+          ],
+        ),
       ),
     );
   }
@@ -270,10 +284,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onChanged: onChanged,
                   activeColor: Theme.of(
                     context,
-                  ).switchTheme.thumbColor?.resolve({MaterialState.selected}),
+                  ).switchTheme.thumbColor?.resolve({WidgetState.selected}),
                   activeTrackColor: Theme.of(
                     context,
-                  ).switchTheme.trackColor?.resolve({MaterialState.selected}),
+                  ).switchTheme.trackColor?.resolve({WidgetState.selected}),
                   inactiveThumbColor: Theme.of(
                     context,
                   ).switchTheme.thumbColor?.resolve({}),

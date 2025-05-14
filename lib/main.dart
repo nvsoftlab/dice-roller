@@ -23,9 +23,9 @@ final materialTheme = ThemeData(
     bodyLarge: TextStyle(fontSize: 16, color: Colors.black87),
     labelLarge: TextStyle(fontSize: 16, color: Colors.black54),
     labelMedium: TextStyle(
-      fontSize: 16,
       color: Color(0xFF14181B),
-      fontWeight: FontWeight.w300,
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
     ),
   ),
 
@@ -100,6 +100,7 @@ final materialTheme = ThemeData(
     }),
   ),
   appBarTheme: const AppBarTheme(
+    centerTitle: false,
     backgroundColor: Color(0xFFF1F4F8),
     elevation: 0,
     iconTheme: IconThemeData(color: Colors.black87),
