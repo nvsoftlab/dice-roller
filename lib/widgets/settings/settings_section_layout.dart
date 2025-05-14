@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SettingsSectionLayout extends StatelessWidget {
-  const SettingsSectionLayout({super.key, required this.content});
+  const SettingsSectionLayout({
+    super.key,
+    required this.content,
+    required this.title,
+  });
 
   final Widget content;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class SettingsSectionLayout extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Appearance', style: Theme.of(context).textTheme.titleLarge),
+            Text(title, style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 16),
             content,
           ],
