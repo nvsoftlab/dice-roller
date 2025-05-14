@@ -1,7 +1,10 @@
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:sensors_plus/sensors_plus.dart';
+
 import 'package:dice_roller/screens/score.dart';
 import 'package:dice_roller/screens/settings.dart';
 import 'package:dice_roller/widgets/dice.dart';
-import 'package:flutter/material.dart';
 
 class DiceScreen extends StatefulWidget {
   const DiceScreen({super.key});
@@ -17,6 +20,34 @@ class _DiceScreenState extends State<DiceScreen> {
   );
 
   int diceCount = 6; // Can be changed by user in Settings later
+  bool _isShaking = false;
+
+  @override
+  void initState() {
+    super.initState();
+    accelerometerEventStream().listen((AccelerometerEvent? event) {
+      if (event != null) {
+        final double x = event.x;
+        final double y = event.y;
+        final double z = event.z;
+
+        final double acceleration = sqrt(x * x + y * y + z * z);
+
+        if (acceleration > 50 && !_isShaking) {
+          setState(() {
+            _isShaking = true;
+          });
+          _rollAllDice();
+          // Debounce to prevent rapid triggering
+          Future.delayed(const Duration(milliseconds: 500), () {
+            setState(() {
+              _isShaking = false;
+            });
+          });
+        }
+      }
+    });
+  }
 
   void _navigateToSettings(BuildContext context) {
     Navigator.of(
