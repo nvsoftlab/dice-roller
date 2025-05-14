@@ -2,10 +2,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+enum DiceType { d6, d6Classic, d10 }
+
 class Dice extends StatefulWidget {
   // If you need to pass any initial parameters, define them here
   final double size;
-  const Dice({super.key, this.size = 150.0});
+  final DiceType type;
+  const Dice({super.key, this.size = 150.0, this.type = DiceType.d6Classic});
 
   @override
   // Make the State class public so DiceScreen can use a GlobalKey with it
@@ -66,11 +69,27 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
     // Renamed from _rollDice
     if (_isRolling) return;
 
-    _finalDiceFace = _random.nextInt(6) + 1;
+    switch (widget.type) {
+      case DiceType.d6Classic:
+      case DiceType.d6:
+        _finalDiceFace = _random.nextInt(6) + 1;
+        break;
+      case DiceType.d10:
+        _finalDiceFace = _random.nextInt(10) + 1;
+        break;
+    }
 
     setState(() {
       _isRolling = true;
-      _currentDiceFace = _random.nextInt(6) + 1; // Interim face
+      switch (widget.type) {
+        case DiceType.d6Classic:
+        case DiceType.d6:
+          _currentDiceFace = _random.nextInt(6) + 1;
+          break;
+        case DiceType.d10:
+          _currentDiceFace = _random.nextInt(10) + 1;
+          break;
+      }
     });
 
     _animationController.forward(from: 0.0);
@@ -92,6 +111,18 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   Widget _buildDiceFace(int value) {
+    switch (widget.type) {
+      case DiceType.d6Classic:
+        return _buildClassicDiceFace(value);
+      case DiceType.d6:
+      case DiceType.d10:
+        return _buildNumericDiceFace(value);
+      default:
+        return _buildClassicDiceFace(value); // Fallback
+    }
+  }
+
+  Widget _buildClassicDiceFace(int value) {
     final double pipPadding = 16.0;
     List<Widget> pips = [];
     switch (value) {
@@ -145,6 +176,39 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
       padding: EdgeInsets.all(pipPadding),
       child: Stack(children: pips),
     );
+  }
+
+  Widget _buildNumericDiceFace(int value) {
+    String valueString = value.toString();
+    List<Widget> digitWidgets = [];
+
+    for (int i = 0; i < valueString.length; i++) {
+      digitWidgets.add(
+        Text(
+          valueString[i],
+          style: TextStyle(
+            fontSize: widget.size * 0.4,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+      );
+    }
+
+    Widget content = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: digitWidgets,
+    );
+
+    // Apply rotation only when the dice is NOT rolling (final state)
+    if (!_isRolling) {
+      content = RotatedBox(
+        quarterTurns: 2, // Rotate 180 degrees to flip the numbers
+        child: content,
+      );
+    }
+
+    return Center(child: content);
   }
 
   @override
