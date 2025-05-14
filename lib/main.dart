@@ -1,7 +1,6 @@
+import 'package:dice_roller/screens/dice.dart';
 import 'package:flutter/material.dart';
 
-import 'package:dice_roller/screens/roller.dart';
-
 void main() {
-  runApp(MaterialApp(home: Scaffold(body: RollerScreen())));
+  runApp(MaterialApp(home: DiceScreen()));
 }
