@@ -74,6 +74,29 @@ class _DiceScreenState extends State<DiceScreen> {
               Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(
+                          Icons.history,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        onPressed: () => _navigateToScore(context),
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.settings,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        onPressed: () => _navigateToSettings(context),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
@@ -93,28 +116,6 @@ class _DiceScreenState extends State<DiceScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      IconButton(
-                        icon: const Icon(
-                          Icons.history,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                        onPressed: () => _navigateToScore(context),
-                      ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                        onPressed: () => _navigateToSettings(context),
                       ),
                     ],
                   ),
