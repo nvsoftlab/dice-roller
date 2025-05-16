@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -21,11 +22,38 @@ class _DiceScreenState extends State<DiceScreen> {
 
   int diceCount = 6; // Can be changed by user in Settings later
   bool _isShaking = false;
+  StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
+  bool _isScreenVisible = true;
 
   @override
   void initState() {
     super.initState();
-    accelerometerEventStream().listen((AccelerometerEvent? event) {
+    _startAccelerometerListener();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Check if the current route is the DiceScreen
+    final ModalRoute? route = ModalRoute.of(context);
+    final bool isCurrentlyVisible = route?.isCurrent ?? false;
+
+    if (isCurrentlyVisible && !_isScreenVisible) {
+      _startAccelerometerListener();
+      _isScreenVisible = true;
+    } else if (!isCurrentlyVisible &&
+        _isScreenVisible &&
+        _accelerometerSubscription != null) {
+      _accelerometerSubscription!.cancel();
+      _accelerometerSubscription = null;
+      _isScreenVisible = false;
+    }
+  }
+
+  void _startAccelerometerListener() {
+    _accelerometerSubscription ??= accelerometerEventStream().listen((
+      AccelerometerEvent? event,
+    ) {
       if (event != null) {
         final double x = event.x;
         final double y = event.y;
@@ -47,6 +75,13 @@ class _DiceScreenState extends State<DiceScreen> {
         }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    // Cancel the subscription when the widget is disposed (as a safety net)
+    _accelerometerSubscription?.cancel();
+    super.dispose();
   }
 
   void _navigateToSettings(BuildContext context) {
