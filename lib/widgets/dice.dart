@@ -64,32 +64,24 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  int _generateRandomFaceValueForType(DiceType type) {
+    switch (type) {
+      case DiceType.d6Classic:
+      case DiceType.d6:
+        return _random.nextInt(6) + 1;
+      case DiceType.d10:
+        return _random.nextInt(10) + 1;
+    }
+  }
+
   // Make this method public to be called from DiceScreen via GlobalKey
   void rollDice() {
     // Renamed from _rollDice
     if (_isRolling) return;
-
-    switch (widget.type) {
-      case DiceType.d6Classic:
-      case DiceType.d6:
-        _finalDiceFace = _random.nextInt(6) + 1;
-        break;
-      case DiceType.d10:
-        _finalDiceFace = _random.nextInt(10) + 1;
-        break;
-    }
-
+    _finalDiceFace = _generateRandomFaceValueForType(widget.type);
     setState(() {
       _isRolling = true;
-      switch (widget.type) {
-        case DiceType.d6Classic:
-        case DiceType.d6:
-          _currentDiceFace = _random.nextInt(6) + 1;
-          break;
-        case DiceType.d10:
-          _currentDiceFace = _random.nextInt(10) + 1;
-          break;
-      }
+      _currentDiceFace = _generateRandomFaceValueForType(widget.type);
     });
 
     _animationController.forward(from: 0.0);
@@ -123,7 +115,7 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   Widget _buildClassicDiceFace(int value) {
-    final double pipPadding = 16.0;
+    final double pipPadding = widget.size * 0.1;
     List<Widget> pips = [];
     switch (value) {
       case 1:
