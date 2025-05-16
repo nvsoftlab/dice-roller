@@ -2,9 +2,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+enum DiceType { d6, d6Classic, d10 }
+
 class Dice extends StatefulWidget {
   // If you need to pass any initial parameters, define them here
-  const Dice({super.key});
+  final double size;
+  final DiceType type;
+  const Dice({super.key, this.size = 150.0, this.type = DiceType.d6Classic});
 
   @override
   // Make the State class public so DiceScreen can use a GlobalKey with it
@@ -60,16 +64,24 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  int _generateRandomFaceValueForType(DiceType type) {
+    switch (type) {
+      case DiceType.d6Classic:
+      case DiceType.d6:
+        return _random.nextInt(6) + 1;
+      case DiceType.d10:
+        return _random.nextInt(10) + 1;
+    }
+  }
+
   // Make this method public to be called from DiceScreen via GlobalKey
   void rollDice() {
     // Renamed from _rollDice
     if (_isRolling) return;
-
-    _finalDiceFace = _random.nextInt(6) + 1;
-
+    _finalDiceFace = _generateRandomFaceValueForType(widget.type);
     setState(() {
       _isRolling = true;
-      _currentDiceFace = _random.nextInt(6) + 1; // Interim face
+      _currentDiceFace = _generateRandomFaceValueForType(widget.type);
     });
 
     _animationController.forward(from: 0.0);
@@ -78,7 +90,8 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildPip({double size = 24.0}) {
+  Widget _buildPip({double? size}) {
+    size ??= widget.size * 0.12;
     return Container(
       width: size,
       height: size,
@@ -90,7 +103,19 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   Widget _buildDiceFace(int value) {
-    final double pipPadding = 16.0;
+    switch (widget.type) {
+      case DiceType.d6Classic:
+        return _buildClassicDiceFace(value);
+      case DiceType.d6:
+      case DiceType.d10:
+        return _buildNumericDiceFace(value);
+      default:
+        return _buildClassicDiceFace(value); // Fallback
+    }
+  }
+
+  Widget _buildClassicDiceFace(int value) {
+    final double pipPadding = widget.size * 0.1;
     List<Widget> pips = [];
     switch (value) {
       case 1:
@@ -145,6 +170,39 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
     );
   }
 
+  Widget _buildNumericDiceFace(int value) {
+    String valueString = value.toString();
+    List<Widget> digitWidgets = [];
+
+    for (int i = 0; i < valueString.length; i++) {
+      digitWidgets.add(
+        Text(
+          valueString[i],
+          style: TextStyle(
+            fontSize: widget.size * 0.4,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+      );
+    }
+
+    Widget content = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: digitWidgets,
+    );
+
+    // Apply rotation only when the dice is NOT rolling (final state)
+    if (!_isRolling) {
+      content = RotatedBox(
+        quarterTurns: 2, // Rotate 180 degrees to flip the numbers
+        child: content,
+      );
+    }
+
+    return Center(child: content);
+  }
+
   @override
   Widget build(BuildContext context) {
     // This widget now ONLY returns the visual representation of the dice.
@@ -153,8 +211,8 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
     return RotationTransition(
       turns: _rotationAnimation,
       child: Container(
-        width: 150, // Intrinsic size of the dice
-        height: 150,
+        width: widget.size,
+        height: widget.size,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
