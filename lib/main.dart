@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:dice_roller/screens/dice.dart';
 import 'package:dice_roller/l10n/app_localizations.dart';
 
-
 final materialTheme = ThemeData(
   primaryColor: Color(0xFFF1F4F8),
   brightness: Brightness.light,
@@ -35,7 +34,6 @@ final materialTheme = ThemeData(
   sliderTheme: SliderThemeData(
     activeTrackColor: Colors.deepPurpleAccent,
     inactiveTrackColor: Color.fromARGB(
-      // Replaced .withOpacity(0.3)
       (0.3 * 255).round(),
       Colors.deepPurpleAccent.red,
       Colors.deepPurpleAccent.green,
@@ -43,7 +41,6 @@ final materialTheme = ThemeData(
     ),
     thumbColor: Colors.deepPurpleAccent,
     overlayColor: Color.fromARGB(
-      // Replaced .withOpacity(0.2)
       (0.2 * 255).round(),
       Colors.deepPurpleAccent.red,
       Colors.deepPurpleAccent.green,
@@ -115,7 +112,6 @@ final materialTheme = ThemeData(
   ),
 );
 
-
 const List<DeviceOrientation> deviceOrientations = [
   DeviceOrientation.portraitUp,
   DeviceOrientation.portraitDown,
@@ -125,24 +121,24 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(deviceOrientations).then((_) {
     runApp(
-    MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      localeResolutionCallback: (locale, supportedLocales) {
-        // Check if the current device locale is supported
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale?.languageCode &&
-              supportedLocale.countryCode == locale?.countryCode) {
-            return supportedLocale;
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        localeResolutionCallback: (locale, supportedLocales) {
+          // Check if the current device locale is supported
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale?.languageCode &&
+                supportedLocale.countryCode == locale?.countryCode) {
+              return supportedLocale;
+            }
           }
-        }
-        // If the device locale is not supported, use the first one
-        // from the list (English, in this case).
-        return supportedLocales.first;
-      },
-      theme: materialTheme,
-      home: DiceScreen(),
-    ),
-  );
+          // If the device locale is not supported, use the first one
+          // from the list (English, in this case).
+          return supportedLocales.first;
+        },
+        theme: materialTheme,
+        home: DiceScreen(),
+      ),
+    );
   });
 }

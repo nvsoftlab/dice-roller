@@ -3,6 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dice_roller/constants/settings.dart'; // For kColors
+import 'package:dice_roller/constants/shared_preferences_indexes.dart'; // For selectedColorIndexKey
+
 import 'package:dice_roller/screens/score.dart';
 import 'package:dice_roller/screens/settings.dart';
 import 'package:dice_roller/widgets/dice.dart';
@@ -24,11 +28,34 @@ class _DiceScreenState extends State<DiceScreen> {
   bool _isShaking = false;
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   bool _isScreenVisible = true;
+  Color _backgroundColor =
+      kColors.isNotEmpty
+          ? kColors[0]
+          : const Color(0xFFBCA8FF); // Initial default
 
   @override
   void initState() {
     super.initState();
+    _loadBackgroundColor();
     _startAccelerometerListener();
+  }
+
+  Future<void> _loadBackgroundColor() async {
+    final preferences = await SharedPreferences.getInstance();
+    if (!mounted) return;
+
+    // Get the stored index. Default to 0 if not found (first color in kColors).
+    final int colorIndex = preferences.getInt(selectedColorIndexKey) ?? 0;
+
+    if (kColors.isNotEmpty && colorIndex >= 0 && colorIndex < kColors.length) {
+      if (_backgroundColor != kColors[colorIndex]) {
+        setState(() {
+          _backgroundColor = kColors[colorIndex];
+        });
+      }
+    }
+    // If kColors is empty or index is out of bounds after defaulting,
+    // _backgroundColor retains its last valid or initialized value.
   }
 
   @override
@@ -39,6 +66,7 @@ class _DiceScreenState extends State<DiceScreen> {
     final bool isCurrentlyVisible = route?.isCurrent ?? false;
 
     if (isCurrentlyVisible && !_isScreenVisible) {
+      _loadBackgroundColor(); // Reload color when screen becomes visible
       _startAccelerometerListener();
       _isScreenVisible = true;
     } else if (!isCurrentlyVisible &&
@@ -84,10 +112,15 @@ class _DiceScreenState extends State<DiceScreen> {
     super.dispose();
   }
 
-  void _navigateToSettings(BuildContext context) {
-    Navigator.of(
+  void _navigateToSettings(BuildContext context) async {
+    await Navigator.of(
       context,
     ).push(MaterialPageRoute(builder: (ctx) => const SettingsScreen()));
+
+    // After returning from settings, reload the background color
+    if (mounted) {
+      _loadBackgroundColor();
+    }
   }
 
   void _navigateToScore(BuildContext context) {
@@ -126,10 +159,24 @@ class _DiceScreenState extends State<DiceScreen> {
     final Size screenSize = MediaQuery.of(context).size;
     final double width = screenSize.width;
 
-    const Color primaryBackgroundColor = Color(0xFFBCA8FF);
+    // Calculate a lighter version of the background color for the score container
+    HSLColor hslColor = HSLColor.fromColor(_backgroundColor);
+    // Increase lightness by 0.1, ensuring it doesn't exceed 1.0
+    HSLColor lighterHslColor = hslColor.withLightness(
+      (hslColor.lightness + 0.1).clamp(0.0, 1.0),
+    );
+    Color scoreContainerColor = lighterHslColor.toColor();
+
+    // Determine text color based on the score container's background brightness
+    final Brightness scoreContainerBrightness =
+        ThemeData.estimateBrightnessForColor(scoreContainerColor);
+    final Color scoreTextColor =
+        scoreContainerBrightness == Brightness.light
+            ? Colors.black87
+            : Colors.white;
 
     return Scaffold(
-      backgroundColor: primaryBackgroundColor,
+      backgroundColor: _backgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
@@ -171,13 +218,26 @@ class _DiceScreenState extends State<DiceScreen> {
                           vertical: 10.0,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFCEC0FF),
+                          color: scoreContainerColor,
                           borderRadius: BorderRadius.circular(25.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(
+                                0.15,
+                              ), // Shadow color
+                              spreadRadius: 1, // Spread of the shadow
+                              blurRadius: 4, // Blurriness of the shadow
+                              offset: const Offset(
+                                0,
+                                2,
+                              ), // Position of the shadow (dx, dy)
+                            ),
+                          ],
                         ),
-                        child: const Text(
+                        child: Text(
                           'Your Score: 1',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: scoreTextColor,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
