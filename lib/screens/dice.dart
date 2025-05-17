@@ -24,7 +24,7 @@ class _DiceScreenState extends State<DiceScreen> {
     (_) => GlobalKey<DiceState>(),
   );
 
-  int diceCount = 6; // Can be changed by user in Settings later
+  int diceCount = 1;
   bool _isShaking = false;
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   bool _isScreenVisible = true;
@@ -37,6 +37,7 @@ class _DiceScreenState extends State<DiceScreen> {
   void initState() {
     super.initState();
     _loadBackgroundColor();
+    _loadDiceSettings(); // Load the number of dice
     _startAccelerometerListener();
   }
 
@@ -58,6 +59,17 @@ class _DiceScreenState extends State<DiceScreen> {
     // _backgroundColor retains its last valid or initialized value.
   }
 
+  Future<void> _loadDiceSettings() async {
+    final preferences = await SharedPreferences.getInstance();
+    if (!mounted) return;
+
+    setState(() {
+      // Load the number of dice. Default to 4.0 (as in DiceSettingsSection) if not found.
+      // The value in SharedPreferences is stored as a double.
+      diceCount = (preferences.getDouble(numberOfDicesKey) ?? 4.0).toInt();
+    });
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -67,6 +79,7 @@ class _DiceScreenState extends State<DiceScreen> {
 
     if (isCurrentlyVisible && !_isScreenVisible) {
       _loadBackgroundColor(); // Reload color when screen becomes visible
+      _loadDiceSettings(); // Reload dice settings when screen becomes visible
       _startAccelerometerListener();
       _isScreenVisible = true;
     } else if (!isCurrentlyVisible &&
@@ -117,9 +130,10 @@ class _DiceScreenState extends State<DiceScreen> {
       context,
     ).push(MaterialPageRoute(builder: (ctx) => const SettingsScreen()));
 
-    // After returning from settings, reload the background color
+    // After returning from settings, reload relevant settings
     if (mounted) {
       _loadBackgroundColor();
+      _loadDiceSettings(); // Reload the number of dice
     }
   }
 

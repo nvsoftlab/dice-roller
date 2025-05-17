@@ -10,7 +10,6 @@ final materialTheme = ThemeData(
   brightness: Brightness.light,
   primarySwatch: Colors.blue,
   scaffoldBackgroundColor: const Color(0xFFF1F4F8),
-  cardColor: Colors.white,
   textTheme: GoogleFonts.robotoTextTheme().copyWith(
     titleLarge: TextStyle(
       fontSize: 24,
@@ -45,20 +44,6 @@ final materialTheme = ThemeData(
       Colors.deepPurpleAccent.red,
       Colors.deepPurpleAccent.green,
       Colors.deepPurpleAccent.blue,
-    ),
-  ),
-  dropdownMenuTheme: DropdownMenuThemeData(
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Colors.grey[200],
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide.none,
-      ),
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: 12.0,
-      ),
     ),
   ),
   switchTheme: SwitchThemeData(
@@ -103,7 +88,7 @@ final materialTheme = ThemeData(
     centerTitle: false,
     backgroundColor: Color(0xFFF1F4F8),
     elevation: 0,
-    iconTheme: IconThemeData(color: Colors.black87),
+    iconTheme: IconThemeData(color: Color(0xFF14181B)),
     titleTextStyle: TextStyle(
       fontSize: 22,
       fontWeight: FontWeight.w600,
