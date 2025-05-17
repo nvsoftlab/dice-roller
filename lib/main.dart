@@ -1,8 +1,10 @@
-import 'package:dice_roller/l10n/app_localizations.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:dice_roller/screens/dice.dart';
+import 'package:dice_roller/l10n/app_localizations.dart';
+
 
 final materialTheme = ThemeData(
   primaryColor: Color(0xFFF1F4F8),
@@ -113,8 +115,16 @@ final materialTheme = ThemeData(
   ),
 );
 
+
+const List<DeviceOrientation> deviceOrientations = [
+  DeviceOrientation.portraitUp,
+  DeviceOrientation.portraitDown,
+];
+
 void main() {
-  runApp(
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(deviceOrientations).then((_) {
+    runApp(
     MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -134,4 +144,5 @@ void main() {
       home: DiceScreen(),
     ),
   );
+  });
 }
