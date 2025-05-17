@@ -14,7 +14,7 @@ class AppearanceSection extends StatefulWidget {
 }
 
 class _AppearanceSectionState extends State<AppearanceSection> {
-  int? _selectedIndex;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -26,18 +26,13 @@ class _AppearanceSectionState extends State<AppearanceSection> {
     final preferences = await SharedPreferences.getInstance();
     if (!mounted) return;
 
-    int? newSelectedIndex;
-    int? storedIndex = preferences.getInt(selectedColorIndexKey);
+    int newSelectedIndex = 0;
+    final int? storedIndex = preferences.getInt(selectedColorIndexKey);
 
-    if (storedIndex == null) {
-      // Preference is null, default to 0 (index for kColors[0]).
-      newSelectedIndex = 0;
-    } else if (storedIndex >= 0 && storedIndex < kColors.length) {
-      // Preference exists and is a valid index for kColors.
+    if (storedIndex != null &&
+        storedIndex >= 0 &&
+        storedIndex < kColors.length) {
       newSelectedIndex = storedIndex;
-    } else {
-      // Preference exists but is out of bounds for kColors, default to 0.
-      newSelectedIndex = 0;
     }
 
     setState(() {
@@ -52,7 +47,7 @@ class _AppearanceSectionState extends State<AppearanceSection> {
 
   Widget _buildBottomSheetColorGrid(
     BuildContext sheetContext,
-    int? currentGridSelectionIndex,
+    int currentGridSelectionIndex,
     ValueChanged<int> onColorSelected,
   ) {
     return GridView.builder(
@@ -90,7 +85,7 @@ class _AppearanceSectionState extends State<AppearanceSection> {
             BuildContext statefulBuilderContext,
             StateSetter modalSetState,
           ) {
-            int? tempSelectedIndex = _selectedIndex;
+            int tempSelectedIndex = _selectedIndex;
 
             return Padding(
               padding: EdgeInsets.fromLTRB(
@@ -144,7 +139,7 @@ class _AppearanceSectionState extends State<AppearanceSection> {
             style: Theme.of(context).textTheme.labelMedium,
           ),
           CurrentColorIndicator(
-            color: kColors[_selectedIndex!],
+            color: kColors[_selectedIndex],
             onTap: () => _showColorPickerBottomSheet(context),
             size: 30,
             isSelected: true,
