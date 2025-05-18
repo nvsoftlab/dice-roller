@@ -1,5 +1,6 @@
 import 'package:dice_roller/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NumberOfDicesControl extends StatelessWidget {
   final double currentNumberOfDices;
@@ -39,7 +40,10 @@ class NumberOfDicesControl extends StatelessWidget {
           min: 1,
           max: 6,
           divisions: 5,
-          onChanged: onNumberOfDicesChanged,
+          onChanged: (value) {
+            HapticFeedback.lightImpact();
+            onNumberOfDicesChanged(value);
+          },
         ),
       ],
     );
