@@ -1,8 +1,8 @@
 import 'package:dice_roller/constants/settings.dart';
 import 'package:dice_roller/constants/shared_preferences_indexes.dart';
 import 'package:dice_roller/l10n/app_localizations.dart';
-import 'package:dice_roller/widgets/settings/dice_configuration_list.dart'; // Assuming this is DiceConfigurationListWidget
-import 'package:dice_roller/widgets/settings/number_of_dices_control.dart'; // Assuming this is NumberOfDicesControlWidget
+import 'package:dice_roller/widgets/settings/dice_configuration_list.dart';
+import 'package:dice_roller/widgets/settings/number_of_dices_control.dart';
 import 'package:dice_roller/widgets/settings/settings_section_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
