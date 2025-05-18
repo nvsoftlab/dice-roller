@@ -37,7 +37,7 @@ class _DiceScreenState extends State<DiceScreen> {
   void initState() {
     super.initState();
     _loadBackgroundColor();
-    _loadDiceSettings(); // Load the number of dice
+    _loadDiceSettings();
     _startAccelerometerListener();
   }
 
@@ -45,7 +45,6 @@ class _DiceScreenState extends State<DiceScreen> {
     final preferences = await SharedPreferences.getInstance();
     if (!mounted) return;
 
-    // Get the stored index. Default to 0 if not found (first color in kColors).
     final int colorIndex = preferences.getInt(selectedColorIndexKey) ?? 0;
 
     if (kColors.isNotEmpty && colorIndex >= 0 && colorIndex < kColors.length) {
@@ -55,8 +54,6 @@ class _DiceScreenState extends State<DiceScreen> {
         });
       }
     }
-    // If kColors is empty or index is out of bounds after defaulting,
-    // _backgroundColor retains its last valid or initialized value.
   }
 
   Future<void> _loadDiceSettings() async {
@@ -64,9 +61,7 @@ class _DiceScreenState extends State<DiceScreen> {
     if (!mounted) return;
 
     setState(() {
-      // Load the number of dice. Default to 4.0 (as in DiceSettingsSection) if not found.
-      // The value in SharedPreferences is stored as a double.
-      diceCount = (preferences.getDouble(numberOfDicesKey) ?? 4.0).toInt();
+      diceCount = (preferences.getDouble(numberOfDicesKey) ?? 1).toInt();
     });
   }
 
@@ -133,7 +128,7 @@ class _DiceScreenState extends State<DiceScreen> {
     // After returning from settings, reload relevant settings
     if (mounted) {
       _loadBackgroundColor();
-      _loadDiceSettings(); // Reload the number of dice
+      _loadDiceSettings();
     }
   }
 

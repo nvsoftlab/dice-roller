@@ -1,9 +1,8 @@
-// File: dice_settings_section.dart (Your main file)
 import 'package:dice_roller/constants/settings.dart';
 import 'package:dice_roller/constants/shared_preferences_indexes.dart';
 import 'package:dice_roller/l10n/app_localizations.dart';
-import 'package:dice_roller/widgets/settings/dice_configuration_list.dart';
-import 'package:dice_roller/widgets/settings/number_of_dices_control.dart';
+import 'package:dice_roller/widgets/settings/dice_configuration_list.dart'; // Assuming this is DiceConfigurationListWidget
+import 'package:dice_roller/widgets/settings/number_of_dices_control.dart'; // Assuming this is NumberOfDicesControlWidget
 import 'package:dice_roller/widgets/settings/settings_section_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,22 +15,25 @@ class DiceSettingsSection extends StatefulWidget {
 }
 
 class _DiceSettingsSectionState extends State<DiceSettingsSection> {
-  double _numberOfDices = 4.0;
+  static const double _initialNumberOfDicesDefault = 1;
+
+  // State variables
+  late double _numberOfDices;
   late List<String?> _diceTypes;
+  bool _isLoading = true;
 
   String get _defaultDiceType {
-    if (kDiceTypeOptions.isNotEmpty) {
-      final firstOption = kDiceTypeOptions[0];
-      if (firstOption.isNotEmpty) {
-        return firstOption;
-      }
+    if (kDiceTypeOptions.isNotEmpty && kDiceTypeOptions[0].isNotEmpty) {
+      return kDiceTypeOptions[0];
     }
-    return 'D6';
+
+    return kDiceTypeOptions[0];
   }
 
   @override
   void initState() {
     super.initState();
+    _numberOfDices = _initialNumberOfDicesDefault;
     _diceTypes = List<String?>.generate(
       _numberOfDices.toInt(),
       (_) => _defaultDiceType,
@@ -41,38 +43,50 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
   }
 
   Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
+    final preferences = await SharedPreferences.getInstance();
+
+    double loadedNumberOfDices =
+        preferences.getDouble(numberOfDicesKey) ?? _initialNumberOfDicesDefault;
+
+    List<String>? loadedPersistedTypes = preferences.getStringList(
+      diceTypesKey,
+    );
+    int currentDiceCount = loadedNumberOfDices.toInt();
+    List<String?> finalDiceTypes;
+
+    if (loadedPersistedTypes != null &&
+        loadedPersistedTypes.length == currentDiceCount) {
+      finalDiceTypes = List<String?>.from(loadedPersistedTypes, growable: true);
+    } else {
+      finalDiceTypes = List<String?>.generate(
+        currentDiceCount,
+        (_) => _defaultDiceType,
+        growable: true,
+      );
+    }
+
     if (!mounted) return;
 
     setState(() {
-      _numberOfDices = prefs.getDouble(numberOfDicesKey) ?? _numberOfDices;
-      List<String>? loadedTypes = prefs.getStringList(diceTypesKey);
-      int currentDiceCount = _numberOfDices.toInt();
-
-      if (loadedTypes != null && loadedTypes.length == currentDiceCount) {
-        _diceTypes = List<String?>.from(loadedTypes, growable: true);
-      } else {
-        _diceTypes = List<String?>.generate(
-          currentDiceCount,
-          (_) => _defaultDiceType,
-          growable: true,
-        );
-        if (loadedTypes == null || (loadedTypes.length != currentDiceCount)) {
-          _saveSettings();
-        }
-      }
+      _numberOfDices = loadedNumberOfDices;
+      _diceTypes = finalDiceTypes;
+      _isLoading = false;
     });
+
+    if (loadedPersistedTypes == null ||
+        (loadedPersistedTypes.length != currentDiceCount)) {
+      await _saveSettings();
+    }
   }
 
   Future<void> _saveSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble(numberOfDicesKey, _numberOfDices);
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setDouble(numberOfDicesKey, _numberOfDices);
     List<String> typesToSave =
         _diceTypes.map((type) => type ?? _defaultDiceType).toList();
-    await prefs.setStringList(diceTypesKey, typesToSave);
+    await preferences.setStringList(diceTypesKey, typesToSave);
   }
 
-  // Callback for NumberOfDicesControlWidget
   void _handleNumberOfDicesChanged(double value) {
     setState(() {
       int oldDiceCount = _numberOfDices.toInt();
@@ -86,7 +100,8 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
       } else if (newCount < oldDiceCount) {
         _diceTypes = _diceTypes.sublist(0, newCount);
       }
-      // Ensure consistency after adjustment (though above logic should handle it)
+
+      // Safeguard: Ensure _diceTypes list is consistent with newCount.
       if (_diceTypes.length != newCount) {
         _diceTypes = List<String?>.generate(
           newCount,
@@ -98,9 +113,7 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
     _saveSettings();
   }
 
-  // Callback for DiceConfigurationListWidget
   void _handleDiceTypeChanged(int index, String? newValue) {
-    // Ensure index is within bounds before updating
     if (index >= 0 && index < _diceTypes.length) {
       setState(() {
         _diceTypes[index] = newValue;
@@ -111,6 +124,18 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return SettingsSectionLayout(
+        title: AppLocalizations.of(context)!.settingsDiceSettingsTitle,
+        content: const Center(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      );
+    }
+
     final localizations = AppLocalizations.of(context)!;
 
     return SettingsSectionLayout(
@@ -134,7 +159,7 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
     );
   }
 
-  // will be used later
+  // This widget for a switch row is preserved as it might be used later.
   Widget _buildSwitchRow(
     String title,
     bool value,

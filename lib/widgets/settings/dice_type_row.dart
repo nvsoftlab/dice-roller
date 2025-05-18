@@ -16,7 +16,7 @@ class DiceTypeRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -27,7 +27,6 @@ class DiceTypeRow extends StatelessWidget {
           Expanded(
             flex: 3,
             child: DiceTypeDropdown(
-              // Your existing dropdown
               currentValue: currentValue,
               onChanged: onChanged,
             ),

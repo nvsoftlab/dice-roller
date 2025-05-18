@@ -8,7 +8,8 @@ import 'package:dice_roller/l10n/app_localizations.dart';
 final materialTheme = ThemeData(
   primaryColor: Color(0xFFF1F4F8),
   brightness: Brightness.light,
-  primarySwatch: Colors.blue,
+  primaryColorDark: Colors.deepPurpleAccent,
+  primaryColorLight: Color(0xFFBCA8FF),
   scaffoldBackgroundColor: const Color(0xFFF1F4F8),
   textTheme: GoogleFonts.robotoTextTheme().copyWith(
     titleLarge: TextStyle(
@@ -32,19 +33,8 @@ final materialTheme = ThemeData(
 
   sliderTheme: SliderThemeData(
     activeTrackColor: Colors.deepPurpleAccent,
-    inactiveTrackColor: Color.fromARGB(
-      (0.3 * 255).round(),
-      Colors.deepPurpleAccent.red,
-      Colors.deepPurpleAccent.green,
-      Colors.deepPurpleAccent.blue,
-    ),
+    inactiveTrackColor: Color(0xFFBCA8FF),
     thumbColor: Colors.deepPurpleAccent,
-    overlayColor: Color.fromARGB(
-      (0.2 * 255).round(),
-      Colors.deepPurpleAccent.red,
-      Colors.deepPurpleAccent.green,
-      Colors.deepPurpleAccent.blue,
-    ),
   ),
   switchTheme: SwitchThemeData(
     thumbColor: WidgetStateProperty.resolveWith<Color?>((
@@ -59,18 +49,9 @@ final materialTheme = ThemeData(
       Set<WidgetState> states,
     ) {
       if (states.contains(WidgetState.selected)) {
-        // Replaced Colors.deepPurpleAccent.withOpacity(0.5)
-        return Color.fromARGB(
-          (0.5 * 255).round(),
-          Colors.deepPurpleAccent.red,
-          Colors.deepPurpleAccent.green,
-          Colors.deepPurpleAccent.blue,
-        );
+        return Color(0xFFBCA8FF);
       }
-      // Replaced Colors.grey.withOpacity(0.5)
-      // Note: Colors.grey is a MaterialColor, Colors.grey.shade500 is the default grey
-      // but Colors.grey itself is also a Color(0xFF9E9E9E)
-      final greyBase = Colors.grey; // This is Color(0xFF9E9E9E)
+      final greyBase = Colors.grey;
       return Color.fromARGB(
         (0.5 * 255).round(),
         greyBase.red,

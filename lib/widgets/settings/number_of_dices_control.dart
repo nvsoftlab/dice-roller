@@ -28,7 +28,7 @@ class NumberOfDicesControl extends StatelessWidget {
             Text(
               '${currentNumberOfDices.toInt()}',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.deepPurpleAccent,
+                color: Theme.of(context).primaryColorDark,
                 fontWeight: FontWeight.bold,
               ),
             ),

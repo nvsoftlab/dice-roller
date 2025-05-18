@@ -1,4 +1,4 @@
-import 'package:dice_roller/constants/settings.dart'; // Assuming kDiceTypeOptions is here
+import 'package:dice_roller/constants/settings.dart';
 import 'package:flutter/material.dart';
 
 class DiceTypeDropdown extends StatelessWidget {
@@ -11,56 +11,110 @@ class DiceTypeDropdown extends StatelessWidget {
   final String? currentValue;
   final ValueChanged<String?> onChanged;
 
+  void _showDiceOptionsBottomSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+      ),
+      builder: (BuildContext bottomSheetContext) {
+        return SafeArea(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(
+              10,
+              10,
+              10,
+              1 + MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 16),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: kDiceTypeOptions.length,
+                  itemBuilder: (BuildContext listItemContext, int index) {
+                    final String option = kDiceTypeOptions[index];
+                    final bool isSelected = (option == currentValue);
+
+                    return ListTile(
+                      title: Text(
+                        option,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.labelMedium?.copyWith(
+                          color:
+                              isSelected
+                                  ? Theme.of(context).primaryColorDark
+                                  : Theme.of(
+                                    context,
+                                  ).textTheme.labelMedium?.color,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.normal,
+                        ),
+                      ),
+                      trailing:
+                          isSelected
+                              ? Icon(
+                                Icons.check,
+                                color: Theme.of(context).primaryColorDark,
+                              )
+                              : null,
+                      onTap: () {
+                        onChanged(option);
+                        Navigator.pop(bottomSheetContext);
+                      },
+                      selected: isSelected,
+                      selectedTileColor: Theme.of(
+                        context,
+                      ).primaryColorLight.withAlpha(26),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: const Color(0xFFF1F4F8), // User's chosen fill color
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 12.0,
-            vertical: 8.0,
-          ),
-          // 1. Set border with color #e0e3e7 and 2. border radius 8
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            borderSide: const BorderSide(color: Color(0xFFE0E3E7), width: 1.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            borderSide: const BorderSide(color: Color(0xFFE0E3E7), width: 1.0),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            borderSide: const BorderSide(color: Color(0xFFE0E3E7), width: 1.0),
-          ),
+    return InkWell(
+      onTap: () {
+        _showDiceOptionsBottomSheet(context);
+      },
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF1F4F8),
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(color: const Color(0xFFE0E3E7), width: 1),
         ),
-        value: currentValue,
-        icon: const Icon(
-          Icons.keyboard_arrow_down_rounded,
-          color: Color(0xFF14181B),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                currentValue ?? kDiceTypeOptions[0],
+                style: Theme.of(context).textTheme.labelMedium,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(width: 8),
+            const Icon(
+              Icons.keyboard_arrow_down_sharp,
+              color: Color(0xFF14181B),
+            ),
+          ],
         ),
-        elevation: 2,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          color: Colors.black87,
-        ), // Style for the selected item in the button
-        dropdownColor: Colors.white, // Background color of the dropdown menu
-        // menuOffset: Offset.zero, // Removed as it's not available in your Flutter version
-        onChanged: onChanged,
-        items:
-            kDiceTypeOptions.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(
-                  value,
-                  style:
-                      Theme.of(
-                        context,
-                      ).textTheme.labelMedium, // Style for items in the list
-                ),
-              );
-            }).toList(),
       ),
     );
   }
