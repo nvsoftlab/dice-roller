@@ -16,3 +16,5 @@ const List<Color> kColors = [
   Color(0xFF94A3B8),
   Color(0xFFE11D48),
 ];
+
+const int kInitialDiceCount = 1;

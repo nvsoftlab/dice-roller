@@ -24,7 +24,7 @@ class _DiceScreenState extends State<DiceScreen> {
     (_) => GlobalKey<DiceState>(),
   );
 
-  int diceCount = 1;
+  int diceCount = kInitialDiceCount;
   bool _isShaking = false;
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   bool _isScreenVisible = true;

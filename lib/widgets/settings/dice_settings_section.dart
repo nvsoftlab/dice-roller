@@ -17,7 +17,6 @@ class DiceSettingsSection extends StatefulWidget {
 class _DiceSettingsSectionState extends State<DiceSettingsSection> {
   static const double _initialNumberOfDicesDefault = 1;
 
-  // State variables
   late double _numberOfDices;
   late List<String?> _diceTypes;
   bool _isLoading = true;
