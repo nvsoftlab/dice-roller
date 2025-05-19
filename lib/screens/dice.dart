@@ -24,7 +24,7 @@ class _DiceScreenState extends State<DiceScreen> {
     (_) => GlobalKey<DiceState>(),
   );
 
-  int diceCount = 6; // Can be changed by user in Settings later
+  int diceCount = kInitialDiceCount;
   bool _isShaking = false;
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   bool _isScreenVisible = true;
@@ -37,6 +37,7 @@ class _DiceScreenState extends State<DiceScreen> {
   void initState() {
     super.initState();
     _loadBackgroundColor();
+    _loadDiceSettings();
     _startAccelerometerListener();
   }
 
@@ -44,7 +45,6 @@ class _DiceScreenState extends State<DiceScreen> {
     final preferences = await SharedPreferences.getInstance();
     if (!mounted) return;
 
-    // Get the stored index. Default to 0 if not found (first color in kColors).
     final int colorIndex = preferences.getInt(selectedColorIndexKey) ?? 0;
 
     if (kColors.isNotEmpty && colorIndex >= 0 && colorIndex < kColors.length) {
@@ -54,8 +54,15 @@ class _DiceScreenState extends State<DiceScreen> {
         });
       }
     }
-    // If kColors is empty or index is out of bounds after defaulting,
-    // _backgroundColor retains its last valid or initialized value.
+  }
+
+  Future<void> _loadDiceSettings() async {
+    final preferences = await SharedPreferences.getInstance();
+    if (!mounted) return;
+
+    setState(() {
+      diceCount = (preferences.getDouble(numberOfDicesKey) ?? 1).toInt();
+    });
   }
 
   @override
@@ -67,6 +74,7 @@ class _DiceScreenState extends State<DiceScreen> {
 
     if (isCurrentlyVisible && !_isScreenVisible) {
       _loadBackgroundColor(); // Reload color when screen becomes visible
+      _loadDiceSettings(); // Reload dice settings when screen becomes visible
       _startAccelerometerListener();
       _isScreenVisible = true;
     } else if (!isCurrentlyVisible &&
@@ -117,9 +125,10 @@ class _DiceScreenState extends State<DiceScreen> {
       context,
     ).push(MaterialPageRoute(builder: (ctx) => const SettingsScreen()));
 
-    // After returning from settings, reload the background color
+    // After returning from settings, reload relevant settings
     if (mounted) {
       _loadBackgroundColor();
+      _loadDiceSettings();
     }
   }
 

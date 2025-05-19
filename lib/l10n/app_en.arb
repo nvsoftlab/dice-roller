@@ -2,5 +2,17 @@
   "@@locale": "en",
   "settingsScreenTitle": "Settings",
   "settingsAppearanceBgColor": "Background Color",
-  "settingsAppearanceTitle": "Appearance"
+  "settingsAppearanceTitle": "Appearance",
+  "settingsDiceSettingsTitle": "Dice Settings",
+  "settingsNumberOfDices": "Number of Dices",
+  "settingsDiceXType": "Dice {diceNumber} Type",
+  "@settingsDiceXType": {
+    "description": "Label for individual dice type selection, e.g., 'Dice 1 Type'",
+    "placeholders": {
+      "diceNumber": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  }
 }

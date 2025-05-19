@@ -16,4 +16,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsAppearanceTitle => 'Appearance';
+
+  @override
+  String get settingsDiceSettingsTitle => 'Dice Settings';
+
+  @override
+  String get settingsNumberOfDices => 'Number of Dices';
+
+  @override
+  String settingsDiceXType(int diceNumber) {
+    return 'Dice $diceNumber Type';
+  }
 }

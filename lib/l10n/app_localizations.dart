@@ -110,6 +110,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Appearance'**
   String get settingsAppearanceTitle;
+
+  /// No description provided for @settingsDiceSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dice Settings'**
+  String get settingsDiceSettingsTitle;
+
+  /// No description provided for @settingsNumberOfDices.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of Dices'**
+  String get settingsNumberOfDices;
+
+  /// Label for individual dice type selection, e.g., 'Dice 1 Type'
+  ///
+  /// In en, this message translates to:
+  /// **'Dice {diceNumber} Type'**
+  String settingsDiceXType(int diceNumber);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
