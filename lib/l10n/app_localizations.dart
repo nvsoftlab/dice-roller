@@ -147,6 +147,24 @@ abstract class AppLocalizations {
   /// **'Keep Screen On'**
   String get settingsKeepScreenOn;
 
+  /// No description provided for @settingsFeedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback'**
+  String get settingsFeedbackTitle;
+
+  /// No description provided for @settingsSendFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Feedback'**
+  String get settingsSendFeedback;
+
+  /// No description provided for @settingsRateThisApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate this app'**
+  String get settingsRateThisApp;
+
   /// Label for individual dice type selection, e.g., 'Dice 1 Type'
   ///
   /// In en, this message translates to:

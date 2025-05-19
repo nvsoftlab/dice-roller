@@ -36,6 +36,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsKeepScreenOn => 'Keep Screen On';
 
   @override
+  String get settingsFeedbackTitle => 'Feedback';
+
+  @override
+  String get settingsSendFeedback => 'Send Feedback';
+
+  @override
+  String get settingsRateThisApp => 'Rate this app';
+
+  @override
   String settingsDiceXType(int diceNumber) {
     return 'Dice $diceNumber Type';
   }

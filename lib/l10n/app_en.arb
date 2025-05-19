@@ -9,6 +9,9 @@
   "settingsSoundEffects": "Sound Effects",
   "settingsVibration": "Vibration",
   "settingsKeepScreenOn": "Keep Screen On",
+  "settingsFeedbackTitle": "Feedback",
+  "settingsSendFeedback": "Send Feedback",
+  "settingsRateThisApp": "Rate this app",
   "settingsDiceXType": "Dice {diceNumber} Type",
   "@settingsDiceXType": {
     "description": "Label for individual dice type selection, e.g., 'Dice 1 Type'",
