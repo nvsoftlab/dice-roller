@@ -14,13 +14,16 @@ class CustomSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(title, style: Theme.of(context).textTheme.labelMedium),
-        Switch(value: value, onChanged: onChanged),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(title, style: Theme.of(context).textTheme.labelMedium),
+          Switch(value: value, onChanged: onChanged),
+        ],
+      ),
     );
   }
 }
