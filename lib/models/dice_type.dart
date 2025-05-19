@@ -32,9 +32,9 @@ enum DiceType {
         return type;
       }
     }
-    throw ArgumentError(
-      'Unknown DiceType string: $value. Ensure it is one of ${DiceType.values.map((t) => t.stringValue).join(', ')}',
-    );
+
+    // returning fallback value if DiceType not found
+    return DiceType.d6Classic;
   }
 
   String getDisplayName(AppLocalizations localizations) {
