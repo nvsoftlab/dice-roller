@@ -1,5 +1,6 @@
 import 'package:dice_roller/constants/settings.dart';
 import 'package:dice_roller/constants/shared_preferences_indexes.dart';
+import 'package:dice_roller/models/dice_type.dart';
 import 'package:dice_roller/l10n/app_localizations.dart';
 import 'package:dice_roller/widgets/settings/dice_configuration_list.dart';
 import 'package:dice_roller/widgets/settings/number_of_dices_control.dart';
@@ -18,22 +19,18 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
   static const double _initialNumberOfDicesDefault = 1;
 
   late double _numberOfDices;
-  late List<String?> _diceTypes;
+  late List<DiceType?> _diceTypes;
   bool _isLoading = true;
 
-  String get _defaultDiceType {
-    if (kDiceTypeOptions.isNotEmpty && kDiceTypeOptions[0].isNotEmpty) {
-      return kDiceTypeOptions[0];
-    }
-
-    return kDiceTypeOptions[0];
+  DiceType get _defaultDiceType {
+    return DiceType.d6Classic;
   }
 
   @override
   void initState() {
     super.initState();
     _numberOfDices = _initialNumberOfDicesDefault;
-    _diceTypes = List<String?>.generate(
+    _diceTypes = List<DiceType?>.generate(
       _numberOfDices.toInt(),
       (_) => _defaultDiceType,
       growable: true,
@@ -51,13 +48,21 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
       diceTypesKey,
     );
     int currentDiceCount = loadedNumberOfDices.toInt();
-    List<String?> finalDiceTypes;
+    List<DiceType?> finalDiceTypes;
 
     if (loadedPersistedTypes != null &&
         loadedPersistedTypes.length == currentDiceCount) {
-      finalDiceTypes = List<String?>.from(loadedPersistedTypes, growable: true);
+      finalDiceTypes = loadedPersistedTypes
+          .map<DiceType?>((typeString) {
+            try {
+              return DiceType.fromString(typeString);
+            } catch (_) {
+              return _defaultDiceType; // Fallback for invalid stored string
+            }
+          })
+          .toList(growable: true);
     } else {
-      finalDiceTypes = List<String?>.generate(
+      finalDiceTypes = List<DiceType?>.generate(
         currentDiceCount,
         (_) => _defaultDiceType,
         growable: true,
@@ -72,6 +77,7 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
       _isLoading = false;
     });
 
+    // This logic correctly re-saves if the loaded data was inconsistent or absent.
     if (loadedPersistedTypes == null ||
         (loadedPersistedTypes.length != currentDiceCount)) {
       await _saveSettings();
@@ -82,7 +88,9 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setDouble(numberOfDicesKey, _numberOfDices);
     List<String> typesToSave =
-        _diceTypes.map((type) => type ?? _defaultDiceType).toList();
+        _diceTypes
+            .map((type) => type?.stringValue ?? _defaultDiceType.stringValue)
+            .toList();
     await preferences.setStringList(diceTypesKey, typesToSave);
   }
 
@@ -93,16 +101,19 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
       int newCount = value.toInt();
 
       if (newCount > oldDiceCount) {
-        _diceTypes.addAll(
-          List.generate(newCount - oldDiceCount, (_) => _defaultDiceType),
+        List<DiceType?> itemsToAdd = List<DiceType?>.generate(
+          newCount - oldDiceCount,
+          (_) => _defaultDiceType,
+          growable: false,
         );
+        _diceTypes.addAll(itemsToAdd);
       } else if (newCount < oldDiceCount) {
-        _diceTypes = _diceTypes.sublist(0, newCount);
+        _diceTypes.removeRange(newCount, oldDiceCount);
       }
 
       // Safeguard: Ensure _diceTypes list is consistent with newCount.
       if (_diceTypes.length != newCount) {
-        _diceTypes = List<String?>.generate(
+        _diceTypes = List<DiceType?>.generate(
           newCount,
           (_) => _defaultDiceType,
           growable: true,
@@ -112,7 +123,7 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
     _saveSettings();
   }
 
-  void _handleDiceTypeChanged(int index, String? newValue) {
+  void _handleDiceTypeChanged(int index, DiceType? newValue) {
     if (index >= 0 && index < _diceTypes.length) {
       setState(() {
         _diceTypes[index] = newValue;

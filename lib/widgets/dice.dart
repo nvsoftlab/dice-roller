@@ -1,36 +1,25 @@
-// lib/widgets/dice.dart
 import 'dart:math';
 import 'package:flutter/material.dart';
-
-enum DiceType { d6, d6Classic, d10 }
+import 'package:dice_roller/models/dice_type.dart';
 
 class Dice extends StatefulWidget {
-  // If you need to pass any initial parameters, define them here
+  const Dice({super.key, this.size = 150.0, required this.type});
+
   final double size;
   final DiceType type;
-  const Dice({super.key, this.size = 150.0, this.type = DiceType.d6Classic});
 
   @override
-  // Make the State class public so DiceScreen can use a GlobalKey with it
   State<Dice> createState() => DiceState();
 }
 
-// Renamed from _DiceState to DiceState (or keep private and use GlobalKey<_DiceState>)
-// For simplicity in cross-file key usage if DiceScreen were in a different library,
-// making it public is easier. For same-library, _DiceState with GlobalKey<_DiceState> is fine.
-// Let's assume for now _DiceState is okay as they are in the same package.
 class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
   int _currentDiceFace = 1;
-  // _diceCount and its related UI/logic seem to be from a previous version
-  // and are not currently controlled by DiceScreen. Removing for clarity.
-  // If needed, this can be added back as a parameter or internal state.
-
   final Random _random = Random();
 
   late AnimationController _animationController;
   late Animation<double> _rotationAnimation;
+  late Animation<double> _counterRotationAnimation;
   int _finalDiceFace = 1;
-
   bool _isRolling = false;
 
   @override
@@ -41,7 +30,18 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
       vsync: this,
     );
 
+    // Animation for the dice container
     _rotationAnimation = Tween<double>(begin: 0, end: 1.5).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOutCubic,
+      ),
+    );
+
+    // Counter-animation for the numeric text to keep it upright
+    // Its 'turns' value will be the negative of _rotationAnimation's 'turns'
+    // if both are driven by the same controller and have inverse begin/end factors.
+    _counterRotationAnimation = Tween<double>(begin: 0, end: -1.5).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: Curves.easeInOutCubic,
@@ -65,18 +65,10 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   int _generateRandomFaceValueForType(DiceType type) {
-    switch (type) {
-      case DiceType.d6Classic:
-      case DiceType.d6:
-        return _random.nextInt(6) + 1;
-      case DiceType.d10:
-        return _random.nextInt(10) + 1;
-    }
+    return _random.nextInt(type.maxValue) + 1;
   }
 
-  // Make this method public to be called from DiceScreen via GlobalKey
   void rollDice() {
-    // Renamed from _rollDice
     if (_isRolling) return;
     _finalDiceFace = _generateRandomFaceValueForType(widget.type);
     setState(() {
@@ -85,9 +77,6 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
     });
 
     _animationController.forward(from: 0.0);
-    print(
-      'Dice rolling (from Dice widget)... interim: $_currentDiceFace, final: $_finalDiceFace',
-    );
   }
 
   Widget _buildPip({double? size}) {
@@ -104,13 +93,11 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
 
   Widget _buildDiceFace(int value) {
     switch (widget.type) {
-      case DiceType.d6Classic:
-        return _buildClassicDiceFace(value);
       case DiceType.d6:
       case DiceType.d10:
         return _buildNumericDiceFace(value);
-      default:
-        return _buildClassicDiceFace(value); // Fallback
+      case DiceType.d6Classic:
+        return _buildClassicDiceFace(value);
     }
   }
 
@@ -192,22 +179,16 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
       children: digitWidgets,
     );
 
-    // Apply rotation only when the dice is NOT rolling (final state)
-    if (!_isRolling) {
-      content = RotatedBox(
-        quarterTurns: 2, // Rotate 180 degrees to flip the numbers
+    return Center(
+      child: RotationTransition(
+        turns: _counterRotationAnimation,
         child: content,
-      );
-    }
-
-    return Center(child: content);
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // This widget now ONLY returns the visual representation of the dice.
-    // No SafeArea, no outer Column, no Expanded here.
-    // The parent (DiceScreen) will handle its placement and sizing.
     return RotationTransition(
       turns: _rotationAnimation,
       child: Container(
@@ -215,7 +196,7 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
         height: widget.size,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(widget.size * 0.13),
           border: Border.all(color: Colors.grey.shade300, width: 1),
           boxShadow: [
             BoxShadow(
@@ -226,12 +207,9 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
             ),
           ],
         ),
-        child: _buildDiceFace(_currentDiceFace),
+        // Show final face when not rolling, current (interim) when rolling
+        child: _buildDiceFace(_isRolling ? _currentDiceFace : _finalDiceFace),
       ),
     );
   }
-
-  // Removed _buildTopButton and _buildCircularButton as they are not used
-  // by this simplified widget. If DiceScreen needs similar buttons,
-  // it should define them or use a common widget library.
 }
