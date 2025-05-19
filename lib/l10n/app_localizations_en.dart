@@ -24,6 +24,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsNumberOfDices => 'Number of Dices';
 
   @override
+  String get settingsGeneralTitle => 'General';
+
+  @override
+  String get settingsSoundEffects => 'Sound Effects';
+
+  @override
+  String get settingsVibration => 'Vibration';
+
+  @override
+  String get settingsKeepScreenOn => 'Keep Screen On';
+
+  @override
   String settingsDiceXType(int diceNumber) {
     return 'Dice $diceNumber Type';
   }

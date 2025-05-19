@@ -30,7 +30,6 @@ final materialTheme = ThemeData(
       fontSize: 14,
     ),
   ),
-
   sliderTheme: SliderThemeData(
     activeTrackColor: Colors.deepPurpleAccent,
     inactiveTrackColor: Color(0xFFBCA8FF),

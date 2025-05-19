@@ -1,4 +1,3 @@
-import 'package:dice_roller/constants/settings.dart';
 import 'package:dice_roller/constants/shared_preferences_indexes.dart';
 import 'package:dice_roller/models/dice_type.dart';
 import 'package:dice_roller/l10n/app_localizations.dart';
@@ -165,50 +164,6 @@ class _DiceSettingsSectionState extends State<DiceSettingsSection> {
             onDiceTypeChanged: _handleDiceTypeChanged,
           ),
         ],
-      ),
-    );
-  }
-
-  // This widget for a switch row is preserved as it might be used later.
-  Widget _buildSwitchRow(
-    String title,
-    bool value,
-    ValueChanged<bool> onChanged,
-  ) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          onChanged(!value);
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(title, style: Theme.of(context).textTheme.bodyLarge!),
-              SizedBox(
-                height: 24,
-                child: Switch(
-                  value: value,
-                  onChanged: onChanged,
-                  activeColor: Theme.of(
-                    context,
-                  ).switchTheme.thumbColor?.resolve({MaterialState.selected}),
-                  activeTrackColor: Theme.of(
-                    context,
-                  ).switchTheme.trackColor?.resolve({MaterialState.selected}),
-                  inactiveThumbColor: Theme.of(
-                    context,
-                  ).switchTheme.thumbColor?.resolve({}),
-                  inactiveTrackColor: Theme.of(
-                    context,
-                  ).switchTheme.trackColor?.resolve({}),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

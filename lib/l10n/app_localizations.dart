@@ -123,6 +123,30 @@ abstract class AppLocalizations {
   /// **'Number of Dices'**
   String get settingsNumberOfDices;
 
+  /// No description provided for @settingsGeneralTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get settingsGeneralTitle;
+
+  /// No description provided for @settingsSoundEffects.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound Effects'**
+  String get settingsSoundEffects;
+
+  /// No description provided for @settingsVibration.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibration'**
+  String get settingsVibration;
+
+  /// No description provided for @settingsKeepScreenOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Screen On'**
+  String get settingsKeepScreenOn;
+
   /// Label for individual dice type selection, e.g., 'Dice 1 Type'
   ///
   /// In en, this message translates to:
