@@ -13,9 +13,9 @@ class GeneralSection extends StatefulWidget {
 }
 
 class _GeneralSectionState extends State<GeneralSection> {
-  static bool soundEffectsEnabledDefaultValue = true;
-  static bool vibrationEnabledDefaultValue = true;
-  static bool keepScreenOnEnabledDefaultValue = true;
+  static const bool soundEffectsEnabledDefaultValue = true;
+  static const bool vibrationEnabledDefaultValue = true;
+  static const bool keepScreenOnEnabledDefaultValue = true;
 
   bool _soundEffectsEnabled = soundEffectsEnabledDefaultValue;
   bool _vibrationEnabled = vibrationEnabledDefaultValue;
