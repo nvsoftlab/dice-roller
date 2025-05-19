@@ -1,12 +1,13 @@
 import 'package:dice_roller/l10n/app_localizations.dart';
+import 'package:dice_roller/models/dice_type.dart';
 import 'package:dice_roller/widgets/settings/dice_type_row.dart';
 import 'package:flutter/material.dart';
 
 class DiceConfigurationList extends StatelessWidget {
   final int numberOfDices;
-  final List<String?> diceTypes;
+  final List<DiceType?> diceTypes;
   final AppLocalizations localizations;
-  final void Function(int index, String? newType) onDiceTypeChanged;
+  final void Function(int index, DiceType? newType) onDiceTypeChanged;
 
   const DiceConfigurationList({
     super.key,
@@ -20,13 +21,13 @@ class DiceConfigurationList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: List.generate(numberOfDices, (index) {
-        final String? currentTypeValue =
+        final DiceType? currentTypeValue =
             (index < diceTypes.length) ? diceTypes[index] : null;
 
         return DiceTypeRow(
           title: localizations.settingsDiceXType(index + 1),
           currentValue: currentTypeValue,
-          onChanged: (String? newValue) {
+          onChanged: (DiceType? newValue) {
             onDiceTypeChanged(index, newValue);
           },
         );

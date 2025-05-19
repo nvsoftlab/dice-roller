@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const List<String> kDiceTypeOptions = ['D6 (classic)', 'D6', 'D10'];
+const List<String> kDiceTypeOptions = ['D6Classic', 'D6', 'D10'];
 
 const List<Color> kColors = [
   Color(0xFFF28B6C),

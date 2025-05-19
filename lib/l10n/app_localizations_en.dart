@@ -27,4 +27,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String settingsDiceXType(int diceNumber) {
     return 'Dice $diceNumber Type';
   }
+
+  @override
+  String get diceTypeD6Classic => 'D6 Classic';
+
+  @override
+  String get diceTypeD6 => 'D6';
+
+  @override
+  String get diceTypeD10 => 'D10';
+
+  @override
+  String get settingsSelectOption => 'Select an option';
 }

@@ -128,6 +128,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dice {diceNumber} Type'**
   String settingsDiceXType(int diceNumber);
+
+  /// No description provided for @diceTypeD6Classic.
+  ///
+  /// In en, this message translates to:
+  /// **'D6 Classic'**
+  String get diceTypeD6Classic;
+
+  /// No description provided for @diceTypeD6.
+  ///
+  /// In en, this message translates to:
+  /// **'D6'**
+  String get diceTypeD6;
+
+  /// No description provided for @diceTypeD10.
+  ///
+  /// In en, this message translates to:
+  /// **'D10'**
+  String get diceTypeD10;
+
+  /// No description provided for @settingsSelectOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an option'**
+  String get settingsSelectOption;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

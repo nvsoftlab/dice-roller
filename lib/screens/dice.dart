@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dice_roller/constants/settings.dart'; // For kColors
 import 'package:dice_roller/constants/shared_preferences_indexes.dart'; // For selectedColorIndexKey
 
+import 'package:dice_roller/models/dice_type.dart';
 import 'package:dice_roller/screens/score.dart';
 import 'package:dice_roller/screens/settings.dart';
 import 'package:dice_roller/widgets/dice.dart';
@@ -25,13 +26,12 @@ class _DiceScreenState extends State<DiceScreen> {
   );
 
   int diceCount = kInitialDiceCount;
+  List<DiceType>? diceTypes;
   bool _isShaking = false;
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   bool _isScreenVisible = true;
   Color _backgroundColor =
-      kColors.isNotEmpty
-          ? kColors[0]
-          : const Color(0xFFBCA8FF); // Initial default
+      kColors.isNotEmpty ? kColors[0] : const Color(0xFFBCA8FF);
 
   @override
   void initState() {
@@ -60,8 +60,18 @@ class _DiceScreenState extends State<DiceScreen> {
     final preferences = await SharedPreferences.getInstance();
     if (!mounted) return;
 
+    final List<String>? diceTypeStrings = preferences.getStringList(
+      diceTypesKey,
+    );
+
     setState(() {
-      diceCount = (preferences.getDouble(numberOfDicesKey) ?? 1).toInt();
+      diceCount = diceTypeStrings?.length ?? kInitialDiceCount;
+      if (diceTypeStrings != null) {
+        diceTypes =
+            diceTypeStrings.map((str) => DiceType.fromString(str)).toList();
+      } else {
+        diceTypes = null;
+      }
     });
   }
 
@@ -158,7 +168,11 @@ class _DiceScreenState extends State<DiceScreen> {
       runSpacing: 20,
       children: List.generate(
         diceCount,
-        (i) => Dice(key: _diceKeys[i], size: diceSize),
+        (i) => Dice(
+          key: _diceKeys[i],
+          size: diceSize,
+          type: diceTypes?[i] ?? DiceType.d6Classic,
+        ),
       ),
     );
   }

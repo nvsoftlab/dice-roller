@@ -1,17 +1,19 @@
-import 'package:dice_roller/constants/settings.dart';
+import 'package:dice_roller/models/option.dart';
 import 'package:flutter/material.dart';
 
-class DiceTypeDropdown extends StatelessWidget {
-  const DiceTypeDropdown({
+class CustomDropdown<T> extends StatelessWidget {
+  const CustomDropdown({
     super.key,
     required this.currentValue,
     required this.onChanged,
+    required this.options,
   });
 
-  final String? currentValue;
-  final ValueChanged<String?> onChanged;
+  final T? currentValue;
+  final ValueChanged<T?> onChanged;
+  final List<Option<T>> options;
 
-  void _showDiceOptionsBottomSheet(BuildContext context) {
+  void _showOptionsBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -33,14 +35,14 @@ class DiceTypeDropdown extends StatelessWidget {
                 const SizedBox(height: 16),
                 ListView.builder(
                   shrinkWrap: true,
-                  itemCount: kDiceTypeOptions.length,
+                  itemCount: options.length,
                   itemBuilder: (BuildContext listItemContext, int index) {
-                    final String option = kDiceTypeOptions[index];
-                    final bool isSelected = (option == currentValue);
+                    final Option<T> option = options[index];
+                    final bool isSelected = (option.value == currentValue);
 
                     return ListTile(
                       title: Text(
-                        option,
+                        option.label,
                         style: Theme.of(
                           context,
                         ).textTheme.labelMedium?.copyWith(
@@ -62,7 +64,7 @@ class DiceTypeDropdown extends StatelessWidget {
                               )
                               : null,
                       onTap: () {
-                        onChanged(option);
+                        onChanged(option.value);
                         Navigator.pop(bottomSheetContext);
                       },
                       selected: isSelected,
@@ -86,10 +88,27 @@ class DiceTypeDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Option<T>? currentOption;
+    if (currentValue != null) {
+      for (final opt in options) {
+        if (opt.value == currentValue) {
+          currentOption = opt;
+          break;
+        }
+      }
+    }
+
+    String displayedText;
+    if (currentOption != null) {
+      displayedText = currentOption.label;
+    } else if (options.isNotEmpty) {
+      displayedText = options.first.label;
+    } else {
+      displayedText = '';
+    }
+
     return InkWell(
-      onTap: () {
-        _showDiceOptionsBottomSheet(context);
-      },
+      onTap: () => _showOptionsBottomSheet(context),
       borderRadius: BorderRadius.circular(8),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -103,7 +122,7 @@ class DiceTypeDropdown extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Text(
-                currentValue ?? kDiceTypeOptions[0],
+                displayedText,
                 style: Theme.of(context).textTheme.labelMedium,
                 overflow: TextOverflow.ellipsis,
               ),

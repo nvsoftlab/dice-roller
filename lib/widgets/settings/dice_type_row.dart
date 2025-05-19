@@ -1,10 +1,14 @@
+import 'package:dice_roller/constants/settings.dart';
+import 'package:dice_roller/models/dice_type.dart';
 import 'package:dice_roller/widgets/common/dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:dice_roller/models/option.dart';
+import 'package:dice_roller/l10n/app_localizations.dart';
 
 class DiceTypeRow extends StatelessWidget {
   final String title;
-  final String? currentValue;
-  final ValueChanged<String?> onChanged;
+  final DiceType? currentValue;
+  final ValueChanged<DiceType?> onChanged;
 
   const DiceTypeRow({
     super.key,
@@ -12,9 +16,20 @@ class DiceTypeRow extends StatelessWidget {
     required this.currentValue,
     required this.onChanged,
   });
-
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
+    final List<Option<DiceType>> diceOptions =
+        kDiceTypeOptions.map((stringValue) {
+          final diceType = DiceType.fromString(stringValue);
+
+          return Option<DiceType>(
+            label: diceType.getDisplayName(localizations),
+            value: diceType,
+          );
+        }).toList();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
@@ -26,9 +41,10 @@ class DiceTypeRow extends StatelessWidget {
           ),
           Expanded(
             flex: 3,
-            child: DiceTypeDropdown(
+            child: CustomDropdown<DiceType>(
               currentValue: currentValue,
               onChanged: onChanged,
+              options: diceOptions,
             ),
           ),
         ],
