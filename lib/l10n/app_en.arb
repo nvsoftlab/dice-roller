@@ -22,6 +22,17 @@
       }
     }
   },
+  "diceScreenYourScoreX": "Your Score: {score}",
+  "@diceScreenYourScoreX": {
+    "description": "'Your Score: 5'",
+    "placeholders": {
+      "score": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "diceRollButtonText": "Roll",
   "diceTypeD6Classic": "D6 Classic",
   "diceTypeD6": "D6",
   "diceTypeD10": "D10",

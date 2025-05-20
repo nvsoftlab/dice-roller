@@ -171,6 +171,18 @@ abstract class AppLocalizations {
   /// **'Dice {diceNumber} Type'**
   String settingsDiceXType(int diceNumber);
 
+  /// 'Your Score: 5'
+  ///
+  /// In en, this message translates to:
+  /// **'Your Score: {score}'**
+  String diceScreenYourScoreX(int score);
+
+  /// No description provided for @diceRollButtonText.
+  ///
+  /// In en, this message translates to:
+  /// **'Roll'**
+  String get diceRollButtonText;
+
   /// No description provided for @diceTypeD6Classic.
   ///
   /// In en, this message translates to:
