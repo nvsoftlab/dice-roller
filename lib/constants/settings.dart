@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 const List<String> kDiceTypeOptions = ['D6Classic', 'D6', 'D10'];
 
 const List<Color> kColors = [
-  Color(0xFFF28B6C),
-  Color(0xFF5F3DFF),
-  Color(0xFF27948C),
-  Color(0xFFF4CA56),
-  Color(0xFFD0FF8A),
-  Color(0xFFFF76F4),
-  Color(0xFF6EC1E4),
-  Color(0xFF8B5CF6),
-  Color(0xFF22C55E),
-  Color(0xFFFB923C),
-  Color(0xFF94A3B8),
-  Color(0xFFE11D48),
+  Color(0xFFA299FE),
+  Color(0xFF000000),
+  Color(0xFF6A1B9A),
+  Color(0xFFD84315),
+  Color(0xFF2E7D32),
+  Color(0xFFC2185B),
+  Color(0xFF546E7A),
+  Color(0xFFFBC02D),
+  Color(0xFF039BE5),
+  Color(0xFFEF6C00),
+  Color(0xFF4527A0),
+  Color(0xFF7CB342),
 ];
 
 const int kInitialDiceCount = 1;

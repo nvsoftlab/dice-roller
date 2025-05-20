@@ -50,6 +50,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String diceScreenYourScoreX(int score) {
+    return 'Your Score: $score';
+  }
+
+  @override
+  String get diceRollButtonText => 'Roll';
+
+  @override
   String get diceTypeD6Classic => 'D6 Classic';
 
   @override
