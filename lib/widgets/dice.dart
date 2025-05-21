@@ -1,12 +1,19 @@
 import 'dart:math';
+import 'dart:async'; // Import for Completer
 import 'package:flutter/material.dart';
 import 'package:dice_roller/models/dice_type.dart';
 
 class Dice extends StatefulWidget {
-  const Dice({super.key, this.size = 150.0, required this.type});
+  const Dice({
+    super.key,
+    this.size = 150.0,
+    required this.type,
+    this.onRollComplete,
+  });
 
   final double size;
   final DiceType type;
+  final VoidCallback? onRollComplete; // Optional callback
 
   @override
   State<Dice> createState() => DiceState();
@@ -20,6 +27,7 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
   late Animation<double> _rotationAnimation;
   late Animation<double> _counterRotationAnimation;
   int _finalDiceFace = 1;
+  Completer<int>? _rollCompleter; // Completer to signal roll completion
   bool _isRolling = false;
 
   @override
@@ -50,6 +58,9 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
 
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
+        // Complete the completer with the final value
+        _rollCompleter?.complete(_finalDiceFace);
+        _rollCompleter = null; // Reset completer
         setState(() {
           _currentDiceFace = _finalDiceFace;
           _isRolling = false;
@@ -68,15 +79,22 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
     return _random.nextInt(type.maxValue) + 1;
   }
 
-  void rollDice() {
-    if (_isRolling) return;
+  // Modified to return a Future that completes with the final value
+  Future<int> rollDice() {
+    if (_isRolling) {
+      // If already rolling, return the existing future or a new one indicating current state
+      // For simplicity, let's just return a future that completes immediately with the current face
+      return Future.value(_isRolling ? _currentDiceFace : _finalDiceFace);
+    }
+
+    _rollCompleter = Completer<int>(); // Create a new completer
     _finalDiceFace = _generateRandomFaceValueForType(widget.type);
     setState(() {
       _isRolling = true;
       _currentDiceFace = _generateRandomFaceValueForType(widget.type);
-    });
-
+    }); // Update state to show interim value and start animation
     _animationController.forward(from: 0.0);
+    return _rollCompleter!.future; // Return the future
   }
 
   Widget _buildPip({double? size}) {

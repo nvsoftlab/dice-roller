@@ -47,4 +47,10 @@ enum DiceType {
         return localizations.diceTypeD10;
     }
   }
+
+  // Method to convert DiceType to a JSON-compatible string (its name)
+  String toJson() => stringValue;
+
+  // Factory constructor to create DiceType from a JSON string (its name)
+  static DiceType fromJson(String jsonName) => DiceType.fromString(jsonName);
 }

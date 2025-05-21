@@ -13,7 +13,7 @@ class DiceScreenHeader extends StatelessWidget {
     required this.onScorePressed,
     required this.onSettingsPressed,
     required this.backgroundColor,
-    this.currentScore = 1,
+    required this.currentScore,
   });
 
   @override

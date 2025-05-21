@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:convert';
 import 'package:dice_roller/widgets/dice/dice_grid_view.dart';
 import 'package:dice_roller/widgets/dice/dice_screen_header.dart';
 import 'package:dice_roller/widgets/dice/roll_dice_button.dart';
@@ -10,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dice_roller/constants/settings.dart';
 import 'package:dice_roller/constants/shared_preferences_indexes.dart';
 
+import 'package:dice_roller/models/roll_history_entry.dart';
 import 'package:dice_roller/models/dice_type.dart';
 import 'package:dice_roller/screens/score.dart';
 import 'package:dice_roller/screens/settings.dart';
@@ -23,14 +25,18 @@ class DiceScreen extends StatefulWidget {
 }
 
 class _DiceScreenState extends State<DiceScreen> {
+  int diceCount = kInitialDiceCount;
   final List<GlobalKey<DiceState>> _diceKeys = List.generate(
-    6,
+    kInitialDiceCount,
     (_) => GlobalKey<DiceState>(),
   );
-
-  int diceCount = kInitialDiceCount;
-  List<DiceType>? diceTypes;
+  List<DiceType> diceTypes = List.generate(
+    kInitialDiceCount,
+    (_) => DiceType.d6Classic,
+  );
   bool _isShaking = false;
+  bool _isRollingDice = false; // Flag to prevent concurrent roll operations
+  int _currentTotalScore = kInitialDiceCount;
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   bool _isScreenVisible =
       true; // Manages accelerometer listener based on screen visibility
@@ -40,59 +46,57 @@ class _DiceScreenState extends State<DiceScreen> {
   @override
   void initState() {
     super.initState();
-    _loadBackgroundColor();
-    _loadDiceSettings().then((_) {
-      // Ensure diceKeys list is correctly sized after loading settings
-      _updateDiceKeys();
-    });
+    _reloadDataAndUpdateState();
     _startAccelerometerListener();
   }
 
-  Future<void> _loadBackgroundColor() async {
+  Future<void> _reloadDataAndUpdateState() async {
     final preferences = await SharedPreferences.getInstance();
     if (!mounted) return;
 
+    // --- Load Background Color ---
     final int colorIndex = preferences.getInt(selectedColorIndexKey) ?? 0;
-
+    Color newBackgroundColor = _backgroundColor;
     if (kColors.isNotEmpty && colorIndex >= 0 && colorIndex < kColors.length) {
-      if (_backgroundColor != kColors[colorIndex]) {
-        setState(() {
-          _backgroundColor = kColors[colorIndex];
-        });
-      }
+      newBackgroundColor = kColors[colorIndex];
     }
-  }
 
-  Future<void> _loadDiceSettings() async {
-    final preferences = await SharedPreferences.getInstance();
-    if (!mounted) return;
-
+    // --- Load Dice Settings ---
     final List<String>? diceTypeStrings = preferences.getStringList(
       diceTypesKey,
     );
+    int newDiceCount;
+    List<DiceType> newDiceTypes;
 
-    setState(() {
-      diceCount = diceTypeStrings?.length ?? kInitialDiceCount;
-      if (diceTypeStrings != null) {
-        diceTypes =
-            diceTypeStrings.map((str) => DiceType.fromString(str)).toList();
-      } else {
-        diceTypes = List.generate(diceCount, (index) => DiceType.d6Classic);
-      }
-    });
-  }
-
-  void _updateDiceKeys() {
-    if (_diceKeys.length != diceCount) {
-      setState(() {
-        // This rebuilds the keys list to match the actual dice count
-        // Important if diceCount can change dynamically
-        _diceKeys.clear();
-        for (int i = 0; i < diceCount; i++) {
-          _diceKeys.add(GlobalKey<DiceState>());
-        }
-      });
+    if (diceTypeStrings != null && diceTypeStrings.isNotEmpty) {
+      newDiceCount = diceTypeStrings.length;
+      newDiceTypes =
+          diceTypeStrings.map((str) => DiceType.fromString(str)).toList();
+    } else {
+      newDiceCount = kInitialDiceCount;
+      newDiceTypes = List.generate(newDiceCount, (_) => DiceType.d6Classic);
     }
+
+    int newTotalScore = _currentTotalScore;
+    if (diceCount != newDiceCount) {
+      newTotalScore = newDiceCount; // Each new/reconfigured die starts at 1
+    }
+
+    // --- Update State ---
+    setState(() {
+      _backgroundColor = newBackgroundColor;
+      diceCount = newDiceCount;
+      diceTypes = newDiceTypes;
+
+      // Update dice keys only if the count has changed
+      if (_diceKeys.length != newDiceCount) {
+        _diceKeys.clear();
+        _diceKeys.addAll(
+          List.generate(newDiceCount, (_) => GlobalKey<DiceState>()),
+        );
+      }
+      _currentTotalScore = newTotalScore;
+    });
   }
 
   @override
@@ -103,10 +107,9 @@ class _DiceScreenState extends State<DiceScreen> {
 
     if (isCurrentlyVisible && !_isScreenVisible) {
       // Screen became visible
-      _loadBackgroundColor();
-      _loadDiceSettings().then((_) => _updateDiceKeys());
-      _startAccelerometerListener();
       _isScreenVisible = true;
+      _reloadDataAndUpdateState(); // Reload settings and update state
+      _startAccelerometerListener();
     } else if (!isCurrentlyVisible && _isScreenVisible) {
       // Screen became hidden
       _accelerometerSubscription?.cancel();
@@ -118,40 +121,46 @@ class _DiceScreenState extends State<DiceScreen> {
   void _startAccelerometerListener() {
     // Only start if not already listening and screen is visible
     if (_accelerometerSubscription == null && _isScreenVisible) {
-      accelerometerEventStream()
-          .listen((AccelerometerEvent? event) {
-            if (event != null && mounted) {
-              // Check mounted before setState
-              final double x = event.x;
-              final double y = event.y;
-              final double z = event.z;
-              final double acceleration = sqrt(x * x + y * y + z * z);
+      _accelerometerSubscription = accelerometerEventStream().listen(
+        (AccelerometerEvent? event) {
+          if (event != null && mounted) {
+            // Check mounted before setState
+            final double x = event.x;
+            final double y = event.y;
+            final double z = event.z;
+            final double acceleration = sqrt(x * x + y * y + z * z);
 
-              if (acceleration > 50 && !_isShaking) {
-                // Threshold from original code
-                setState(() {
-                  _isShaking = true;
-                });
-                _rollAllDice();
-                Future.delayed(const Duration(milliseconds: 500), () {
-                  if (mounted) {
-                    // Check mounted before setState in delayed future
-                    setState(() {
-                      _isShaking = false;
-                    });
-                  }
-                });
-              }
+            if (acceleration > 50 && !_isShaking) {
+              // Threshold from original code
+              setState(() {
+                _isShaking = true;
+              });
+              _rollAllDice();
+              Future.delayed(const Duration(milliseconds: 400), () {
+                if (mounted) {
+                  // Check mounted before setState in delayed future
+                  setState(() {
+                    _isShaking = false;
+                  });
+                }
+              });
             }
-          })
-          .onDone(() {
-            // Handle if the stream is closed unexpectedly, maybe try to restart
-            if (mounted && _isScreenVisible) {
-              _accelerometerSubscription =
-                  null; // Reset to allow re-subscription
-              _startAccelerometerListener();
-            }
-          });
+          }
+        },
+        onError: (error) {
+          if (mounted && _isScreenVisible) {
+            _accelerometerSubscription?.cancel();
+            _accelerometerSubscription = null;
+            _startAccelerometerListener();
+          }
+        },
+        onDone: () {
+          if (mounted && _isScreenVisible) {
+            _accelerometerSubscription = null;
+            _startAccelerometerListener();
+          }
+        },
+      );
     }
   }
 
@@ -162,37 +171,111 @@ class _DiceScreenState extends State<DiceScreen> {
   }
 
   void _navigateToSettings(BuildContext context) async {
-    // Optionally pause accelerometer before navigating
-    _accelerometerSubscription?.pause();
+    await _accelerometerSubscription?.cancel();
+    _accelerometerSubscription = null;
     await Navigator.of(
       context,
     ).push(MaterialPageRoute(builder: (ctx) => const SettingsScreen()));
 
     if (mounted) {
-      _loadBackgroundColor();
-      _loadDiceSettings().then((_) => _updateDiceKeys());
-      // Optionally resume accelerometer if it was paused
-      if (_isScreenVisible &&
-          _accelerometerSubscription != null &&
-          _accelerometerSubscription!.isPaused) {
-        _accelerometerSubscription!.resume();
-      } else if (_isScreenVisible) {
-        // If it was cancelled and nulled (e.g. by didChangeDependencies)
-        _startAccelerometerListener();
-      }
+      await _reloadDataAndUpdateState();
     }
   }
 
-  void _navigateToScore(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (ctx) => const ScoreScreen()));
+  void _navigateToScore(BuildContext context) async {
+    await _accelerometerSubscription?.cancel();
+    _accelerometerSubscription = null;
+    final preferences = await SharedPreferences.getInstance();
+    final List<String> historyJsonStrings =
+        preferences.getStringList(rollHistoryKey) ?? [];
+    final List<RollHistoryEntry> rollHistory =
+        historyJsonStrings
+            .map((jsonString) {
+              try {
+                return RollHistoryEntry.fromJson(
+                  json.decode(jsonString) as Map<String, dynamic>,
+                );
+              } catch (e) {
+                // Handle potential parsing errors, e.g., if old format data exists
+                return null; // Or a default/error entry
+              }
+            })
+            .whereType<RollHistoryEntry>()
+            .toList(); // Filter out nulls if any errors occurred
+
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => ScoreScreen(rollHistory: rollHistory),
+      ),
+    );
+
+    if (mounted) {
+      await _reloadDataAndUpdateState(); // Reload data if necessary
+    }
   }
 
-  void _rollAllDice() {
-    for (int i = 0; i < diceCount; i++) {
-      if (i < _diceKeys.length && _diceKeys[i].currentState != null) {
-        _diceKeys[i].currentState?.rollDice();
+  void _rollAllDice() async {
+    // Prevent new roll if already shaking OR if a roll operation is in progress
+    if (_isRollingDice) return;
+
+    setState(() {
+      _isRollingDice = true;
+    });
+
+    try {
+      List<Future<int>> rollFutures = [];
+      List<DiceType> currentDiceTypesForRoll = [];
+
+      for (int i = 0; i < diceCount; i++) {
+        if (i < _diceKeys.length && _diceKeys[i].currentState != null) {
+          rollFutures.add(_diceKeys[i].currentState!.rollDice());
+          // Store the type of the die being rolled
+          currentDiceTypesForRoll.add(_diceKeys[i].currentState!.widget.type);
+        }
+      }
+
+      List<int> rolledValues = await Future.wait(rollFutures);
+      int newScore = rolledValues.fold(0, (sum, value) => sum + value);
+      _updateTotalScore(newScore);
+
+      // Create list of IndividualDieRoll objects
+      List<IndividualDieRoll> individualRolls = [];
+      for (int i = 0; i < rolledValues.length; i++) {
+        individualRolls.add(
+          IndividualDieRoll(
+            type: currentDiceTypesForRoll[i],
+            value: rolledValues[i],
+          ),
+        );
+      }
+
+      // Create and save RollHistoryEntry
+      final newEntry = RollHistoryEntry(
+        timestamp: DateTime.now(),
+        totalScore: newScore,
+        individualRolls: individualRolls,
+      );
+
+      final preferences = await SharedPreferences.getInstance();
+      List<String> historyJsonStrings =
+          preferences.getStringList(rollHistoryKey) ?? [];
+      historyJsonStrings.insert(
+        0,
+        json.encode(newEntry.toJson()),
+      ); // Add new entry as JSON string
+
+      if (historyJsonStrings.length > kMaxScoreHistoryLength) {
+        historyJsonStrings = historyJsonStrings.sublist(
+          0,
+          kMaxScoreHistoryLength,
+        );
+      }
+      await preferences.setStringList(rollHistoryKey, historyJsonStrings);
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isRollingDice = false;
+        });
       }
     }
   }
@@ -214,7 +297,7 @@ class _DiceScreenState extends State<DiceScreen> {
                 onScorePressed: () => _navigateToScore(context),
                 onSettingsPressed: () => _navigateToSettings(context),
                 backgroundColor: _backgroundColor,
-                // currentScore: yourActualScoreVariable, // You'll need to manage this state
+                currentScore: _currentTotalScore,
               ),
               Expanded(
                 child: Center(
@@ -240,5 +323,11 @@ class _DiceScreenState extends State<DiceScreen> {
         ),
       ),
     );
+  }
+
+  void _updateTotalScore(int newScore) {
+    setState(() {
+      _currentTotalScore = newScore;
+    });
   }
 }
