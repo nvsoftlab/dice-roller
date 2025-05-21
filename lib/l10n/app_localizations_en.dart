@@ -68,4 +68,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsSelectOption => 'Select an option';
+
+  @override
+  String get scoreScreenTitle => 'Score History';
+
+  @override
+  String get scoreScreenNoRolls => 'No rolls recorded yet.';
+
+  @override
+  String scoreScreenTotalScore(Object score) {
+    return 'Total: $score';
+  }
 }

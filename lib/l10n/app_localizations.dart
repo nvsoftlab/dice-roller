@@ -206,6 +206,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select an option'**
   String get settingsSelectOption;
+
+  /// No description provided for @scoreScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Score History'**
+  String get scoreScreenTitle;
+
+  /// No description provided for @scoreScreenNoRolls.
+  ///
+  /// In en, this message translates to:
+  /// **'No rolls recorded yet.'**
+  String get scoreScreenNoRolls;
+
+  /// No description provided for @scoreScreenTotalScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Total: {score}'**
+  String scoreScreenTotalScore(Object score);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

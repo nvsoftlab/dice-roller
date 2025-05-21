@@ -18,3 +18,5 @@ const List<Color> kColors = [
 ];
 
 const int kInitialDiceCount = 1;
+
+const int kMaxScoreHistoryLength = 20;
