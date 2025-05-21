@@ -17,7 +17,7 @@ class ScoreSectionLayout extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
-        color: theme.cardColor,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(

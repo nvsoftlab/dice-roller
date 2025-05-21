@@ -164,7 +164,7 @@ class MiniDiceWidget extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
+        color: Colors.white,
 
         borderRadius: BorderRadius.circular(size * 0.1),
         border: Border.all(

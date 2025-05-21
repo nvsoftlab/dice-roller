@@ -19,7 +19,7 @@ class TotalScoreDisplay extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: theme.cardColor,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: theme.dividerColor.withOpacity(0.5),
