@@ -291,6 +291,12 @@ abstract class AppLocalizations {
   /// **'Submit Feedback'**
   String get submitFeedbackButton;
 
+  /// No description provided for @submittingFeedbackButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting...'**
+  String get submittingFeedbackButton;
+
   /// No description provided for @validationPleaseEnterEmail.
   ///
   /// In en, this message translates to:
@@ -320,6 +326,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select a rating'**
   String get ratingRequiredError;
+
+  /// No description provided for @feedbackApiError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to submit feedback. Please try again later.'**
+  String get feedbackApiError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

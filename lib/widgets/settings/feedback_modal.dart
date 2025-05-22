@@ -1,9 +1,13 @@
+import 'dart:convert';
+
+import 'package:dice_roller/constants/config.dart';
 import 'package:dice_roller/constants/settings.dart';
 import 'package:dice_roller/l10n/app_localizations.dart';
 import 'package:dice_roller/widgets/settings/feedback_form_fields.dart';
 import 'package:dice_roller/widgets/settings/feedback_submit_button.dart';
 import 'package:dice_roller/widgets/settings/rating_option.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class FeedbackModal extends StatefulWidget {
   const FeedbackModal({super.key});
@@ -15,6 +19,8 @@ class FeedbackModal extends StatefulWidget {
 class _FeedbackModalState extends State<FeedbackModal> {
   String? _selectedRating;
   bool _ratingValidationError = false;
+  bool _apiError = false;
+  bool _isLoading = false;
 
   final _emailController = TextEditingController();
   final _feedbackController = TextEditingController();
@@ -34,42 +40,72 @@ class _FeedbackModalState extends State<FeedbackModal> {
     });
   }
 
-  void _submitFeedback() {
-    final localizations = AppLocalizations.of(context)!;
+  void _submitFeedback() async {
+    final currentContext = context;
+    final localizations = AppLocalizations.of(currentContext)!;
+
     final isFormValid = _formKey.currentState!.validate();
     final isRatingSelected = _selectedRating != null;
 
     setState(() {
       _ratingValidationError = !isRatingSelected;
+      _apiError = false;
     });
 
     if (isFormValid && isRatingSelected) {
-      print('Rating: $_selectedRating');
-      print('Email: ${_emailController.text}');
-      print('Feedback: ${_feedbackController.text}');
-      Navigator.of(context).pop();
+      setState(() {
+        _isLoading = true;
+      });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            localizations.feedbackSubmittedSnackbar,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
+      final Map<String, String> feedbackData = {
+        'rating': _selectedRating!,
+        'email': _emailController.text,
+        'feedback': _feedbackController.text,
+      };
+
+      try {
+        await http.post(
+          Uri.parse(kGoogleSpreadsheetsScriptUrl),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(feedbackData),
+        );
+
+        if (!currentContext.mounted) return;
+
+        ScaffoldMessenger.of(currentContext).showSnackBar(
+          SnackBar(
+            content: Text(
+              localizations.feedbackSubmittedSnackbar,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
             ),
+            backgroundColor: Colors.black87,
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            elevation: 8,
+            duration: const Duration(seconds: 3),
           ),
-          backgroundColor: Colors.black87,
-          behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          elevation: 8,
-          duration: const Duration(seconds: 3),
-        ),
-      );
+        );
+        Navigator.of(currentContext).pop();
+      } catch (e) {
+        if (!currentContext.mounted) return;
+        setState(() {
+          _apiError = true;
+        });
+      } finally {
+        if (currentContext.mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
     }
   }
 
@@ -157,7 +193,7 @@ class _FeedbackModalState extends State<FeedbackModal> {
                 ),
                 if (_ratingValidationError)
                   Padding(
-                    padding: EdgeInsets.only(left: 12.0, top: 8.0),
+                    padding: const EdgeInsets.only(left: 12.0, top: 8.0),
                     child: Text(
                       localizations.ratingRequiredError,
                       style: theme.textTheme.bodySmall?.copyWith(
@@ -170,8 +206,21 @@ class _FeedbackModalState extends State<FeedbackModal> {
                   emailController: _emailController,
                   feedbackController: _feedbackController,
                 ),
+                if (_apiError)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0, top: 8.0),
+                    child: Text(
+                      localizations.feedbackApiError,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.error,
+                      ),
+                    ),
+                  ),
                 const SizedBox(height: 24),
-                FeedbackSubmitButton(onPressed: _submitFeedback),
+                FeedbackSubmitButton(
+                  onPressed: _isLoading ? null : _submitFeedback,
+                  isLoading: _isLoading,
+                ),
               ],
             ),
           ),

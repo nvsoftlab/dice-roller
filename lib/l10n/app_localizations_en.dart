@@ -114,6 +114,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get submitFeedbackButton => 'Submit Feedback';
 
   @override
+  String get submittingFeedbackButton => 'Submitting...';
+
+  @override
   String get validationPleaseEnterEmail => 'Please enter your email';
 
   @override
@@ -127,4 +130,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ratingRequiredError => 'Please select a rating';
+
+  @override
+  String get feedbackApiError => 'Failed to submit feedback. Please try again later.';
 }

@@ -51,9 +51,11 @@
   "tellUsMoreLabel": "Tell us more *",
   "tellUsMoreHint": "What did you like or dislike? Any\nsuggestions for improvement?",
   "submitFeedbackButton": "Submit Feedback",
+  "submittingFeedbackButton": "Submitting...",
   "validationPleaseEnterEmail": "Please enter your email",
   "validationPleaseEnterValidEmail": "Please enter a valid email",
   "validationPleaseTellUsMore": "Please tell us more",
   "feedbackSubmittedSnackbar": "Thank you for your feedback! It helps us to improve the app.",
-  "ratingRequiredError": "Please select a rating"
+  "ratingRequiredError": "Please select a rating",
+  "feedbackApiError": "Failed to submit feedback. Please try again later." 
 }
