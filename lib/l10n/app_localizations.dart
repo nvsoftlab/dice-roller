@@ -356,6 +356,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to submit feedback. Please try again later.'**
   String get feedbackApiError;
+
+  /// No description provided for @settingsTermsOfUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use'**
+  String get settingsTermsOfUse;
+
+  /// No description provided for @settingsPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get settingsPrivacyPolicy;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
