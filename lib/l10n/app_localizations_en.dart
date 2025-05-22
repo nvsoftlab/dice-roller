@@ -91,4 +91,58 @@ class AppLocalizationsEn extends AppLocalizations {
   String scoreScreenTotalScore(Object score) {
     return 'Total: $score';
   }
+
+  @override
+  String get modalShareFeedbackTitle => 'Share Your Feedback';
+
+  @override
+  String get modalRatingQuestion => 'How would you rate your experience\nwith Dice Roller?';
+
+  @override
+  String get ratingPoor => 'Poor';
+
+  @override
+  String get ratingFair => 'Fair';
+
+  @override
+  String get ratingOkay => 'Okay';
+
+  @override
+  String get ratingGood => 'Good';
+
+  @override
+  String get emailLabel => 'Email *';
+
+  @override
+  String get emailHint => 'Enter your Email';
+
+  @override
+  String get tellUsMoreLabel => 'Tell us more *';
+
+  @override
+  String get tellUsMoreHint => 'What did you like or dislike? Any suggestions for improvement?';
+
+  @override
+  String get submitFeedbackButton => 'Submit Feedback';
+
+  @override
+  String get submittingFeedbackButton => 'Submitting...';
+
+  @override
+  String get validationPleaseEnterEmail => 'Please enter your email';
+
+  @override
+  String get validationPleaseEnterValidEmail => 'Please enter a valid email';
+
+  @override
+  String get validationPleaseTellUsMore => 'Please tell us more';
+
+  @override
+  String get feedbackSubmittedSnackbar => 'Thank you for your feedback! It helps us to improve the app.';
+
+  @override
+  String get ratingRequiredError => 'Please select a rating';
+
+  @override
+  String get feedbackApiError => 'Failed to submit feedback. Please try again later.';
 }
