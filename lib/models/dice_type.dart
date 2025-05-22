@@ -2,16 +2,28 @@ import 'package:dice_roller/l10n/app_localizations.dart';
 
 enum DiceType {
   d6Classic,
+  d4,
   d6,
-  d10;
+  d8,
+  d10,
+  d12,
+  d20;
 
   int get maxValue {
     switch (this) {
       case DiceType.d6Classic:
       case DiceType.d6:
         return 6;
+      case DiceType.d4:
+        return 4;
+      case DiceType.d8:
+        return 8;
       case DiceType.d10:
         return 10;
+      case DiceType.d12:
+        return 12;
+      case DiceType.d20:
+        return 20;
     }
   }
 
@@ -19,10 +31,18 @@ enum DiceType {
     switch (this) {
       case DiceType.d6Classic:
         return 'D6Classic';
+      case DiceType.d4:
+        return 'D4';
       case DiceType.d6:
         return 'D6';
+      case DiceType.d8:
+        return 'D8';
       case DiceType.d10:
         return 'D10';
+      case DiceType.d12:
+        return 'D12';
+      case DiceType.d20:
+        return 'D20';
     }
   }
 
@@ -41,10 +61,18 @@ enum DiceType {
     switch (this) {
       case DiceType.d6Classic:
         return localizations.diceTypeD6Classic;
+      case DiceType.d4:
+        return localizations.diceTypeD4;
       case DiceType.d6:
         return localizations.diceTypeD6;
+      case DiceType.d8:
+        return localizations.diceTypeD8;
       case DiceType.d10:
         return localizations.diceTypeD10;
+      case DiceType.d12:
+        return localizations.diceTypeD12;
+      case DiceType.d20:
+        return localizations.diceTypeD20;
     }
   }
 

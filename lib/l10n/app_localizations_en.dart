@@ -61,10 +61,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get diceTypeD6Classic => 'D6 Classic';
 
   @override
+  String get diceTypeD4 => 'D4';
+
+  @override
   String get diceTypeD6 => 'D6';
 
   @override
+  String get diceTypeD8 => 'D8';
+
+  @override
   String get diceTypeD10 => 'D10';
+
+  @override
+  String get diceTypeD12 => 'D12';
+
+  @override
+  String get diceTypeD20 => 'D20';
 
   @override
   String get settingsSelectOption => 'Select an option';

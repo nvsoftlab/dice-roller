@@ -112,8 +112,12 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
 
   Widget _buildDiceFace(int value) {
     switch (widget.type) {
+      case DiceType.d4:
       case DiceType.d6:
+      case DiceType.d8:
       case DiceType.d10:
+      case DiceType.d12:
+      case DiceType.d20:
         return _buildNumericDiceFace(value);
       case DiceType.d6Classic:
         return _buildClassicDiceFace(value);

@@ -189,17 +189,41 @@ abstract class AppLocalizations {
   /// **'D6 Classic'**
   String get diceTypeD6Classic;
 
+  /// No description provided for @diceTypeD4.
+  ///
+  /// In en, this message translates to:
+  /// **'D4'**
+  String get diceTypeD4;
+
   /// No description provided for @diceTypeD6.
   ///
   /// In en, this message translates to:
   /// **'D6'**
   String get diceTypeD6;
 
+  /// No description provided for @diceTypeD8.
+  ///
+  /// In en, this message translates to:
+  /// **'D8'**
+  String get diceTypeD8;
+
   /// No description provided for @diceTypeD10.
   ///
   /// In en, this message translates to:
   /// **'D10'**
   String get diceTypeD10;
+
+  /// No description provided for @diceTypeD12.
+  ///
+  /// In en, this message translates to:
+  /// **'D12'**
+  String get diceTypeD12;
+
+  /// No description provided for @diceTypeD20.
+  ///
+  /// In en, this message translates to:
+  /// **'D20'**
+  String get diceTypeD20;
 
   /// No description provided for @settingsSelectOption.
   ///
