@@ -306,7 +306,7 @@ abstract class AppLocalizations {
   /// No description provided for @tellUsMoreHint.
   ///
   /// In en, this message translates to:
-  /// **'What did you like or dislike? Any\nsuggestions for improvement?'**
+  /// **'What did you like or dislike? Any suggestions for improvement?'**
   String get tellUsMoreHint;
 
   /// No description provided for @submitFeedbackButton.

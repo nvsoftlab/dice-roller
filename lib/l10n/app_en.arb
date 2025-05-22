@@ -53,7 +53,7 @@
   "emailLabel": "Email *",
   "emailHint": "Enter your Email",
   "tellUsMoreLabel": "Tell us more *",
-  "tellUsMoreHint": "What did you like or dislike? Any\nsuggestions for improvement?",
+  "tellUsMoreHint": "What did you like or dislike? Any suggestions for improvement?",
   "submitFeedbackButton": "Submit Feedback",
   "submittingFeedbackButton": "Submitting...",
   "validationPleaseEnterEmail": "Please enter your email",

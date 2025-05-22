@@ -120,7 +120,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tellUsMoreLabel => 'Tell us more *';
 
   @override
-  String get tellUsMoreHint => 'What did you like or dislike? Any\nsuggestions for improvement?';
+  String get tellUsMoreHint => 'What did you like or dislike? Any suggestions for improvement?';
 
   @override
   String get submitFeedbackButton => 'Submit Feedback';
