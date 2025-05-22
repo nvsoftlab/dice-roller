@@ -8,3 +8,5 @@ const String settingsVibrationKey = 'settings_vibration';
 const String settingsKeepScreenOnKey = 'settings_keep_screen_on';
 
 const String rollHistoryKey = 'rollHistoryKey';
+
+const String hasSeenWelcomeKey = 'hasSeenWelcome';
