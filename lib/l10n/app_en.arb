@@ -39,5 +39,26 @@
   "settingsSelectOption": "Select an option",
   "scoreScreenTitle": "Score History",
   "scoreScreenNoRolls": "No rolls recorded yet.",
-  "scoreScreenTotalScore": "Total: {score}"
+  "scoreScreenTotalScore": "Total: {score}",
+  "modalShareFeedbackTitle": "Share Your Feedback",
+  "modalRatingQuestion": "How would you rate your experience\nwith Dice Roller?",
+  "ratingPoor": "Poor",
+  "ratingFair": "Fair",
+  "ratingOkay": "Okay",
+  "ratingGood": "Good",
+  "emailLabel": "Email *",
+  "emailHint": "Enter your Email",
+  "tellUsMoreLabel": "Tell us more *",
+  "tellUsMoreHint": "What did you like or dislike? Any\nsuggestions for improvement?",
+  "submitFeedbackButton": "Submit Feedback",
+  "validationPleaseEnterEmail": "Please enter your email",
+  "validationPleaseEnterValidEmail": "Please enter a valid email",
+  "validationPleaseTellUsMore": "Please tell us more",
+  "validationPleaseSelectRating": "Please select a rating.",
+  "snackBarFeedbackSubmitted": "Feedback submitted (mock)!",
+  "errorTellUsMore": "Please tell us more",
+  "errorValidEmail": "Please enter a valid email",
+  "feedbackSubmittedSuccess": "Feedback submitted (mock)!",
+  "errorPleaseSelectRating": "Please select a rating."
+
 }

@@ -224,6 +224,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total: {score}'**
   String scoreScreenTotalScore(Object score);
+
+  /// No description provided for @modalShareFeedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Your Feedback'**
+  String get modalShareFeedbackTitle;
+
+  /// No description provided for @modalRatingQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'How would you rate your experience\nwith Dice Roller?'**
+  String get modalRatingQuestion;
+
+  /// No description provided for @ratingPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor'**
+  String get ratingPoor;
+
+  /// No description provided for @ratingFair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get ratingFair;
+
+  /// No description provided for @ratingOkay.
+  ///
+  /// In en, this message translates to:
+  /// **'Okay'**
+  String get ratingOkay;
+
+  /// No description provided for @ratingGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get ratingGood;
+
+  /// No description provided for @emailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email *'**
+  String get emailLabel;
+
+  /// No description provided for @emailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Email'**
+  String get emailHint;
+
+  /// No description provided for @tellUsMoreLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us more *'**
+  String get tellUsMoreLabel;
+
+  /// No description provided for @tellUsMoreHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What did you like or dislike? Any\nsuggestions for improvement?'**
+  String get tellUsMoreHint;
+
+  /// No description provided for @submitFeedbackButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Feedback'**
+  String get submitFeedbackButton;
+
+  /// No description provided for @validationPleaseEnterEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email'**
+  String get validationPleaseEnterEmail;
+
+  /// No description provided for @validationPleaseEnterValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get validationPleaseEnterValidEmail;
+
+  /// No description provided for @validationPleaseTellUsMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Please tell us more'**
+  String get validationPleaseTellUsMore;
+
+  /// No description provided for @validationPleaseSelectRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a rating.'**
+  String get validationPleaseSelectRating;
+
+  /// No description provided for @snackBarFeedbackSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback submitted (mock)!'**
+  String get snackBarFeedbackSubmitted;
+
+  /// No description provided for @errorTellUsMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Please tell us more'**
+  String get errorTellUsMore;
+
+  /// No description provided for @errorValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get errorValidEmail;
+
+  /// No description provided for @feedbackSubmittedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback submitted (mock)!'**
+  String get feedbackSubmittedSuccess;
+
+  /// No description provided for @errorPleaseSelectRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a rating.'**
+  String get errorPleaseSelectRating;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

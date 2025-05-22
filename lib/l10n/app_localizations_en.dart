@@ -79,4 +79,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String scoreScreenTotalScore(Object score) {
     return 'Total: $score';
   }
+
+  @override
+  String get modalShareFeedbackTitle => 'Share Your Feedback';
+
+  @override
+  String get modalRatingQuestion => 'How would you rate your experience\nwith Dice Roller?';
+
+  @override
+  String get ratingPoor => 'Poor';
+
+  @override
+  String get ratingFair => 'Fair';
+
+  @override
+  String get ratingOkay => 'Okay';
+
+  @override
+  String get ratingGood => 'Good';
+
+  @override
+  String get emailLabel => 'Email *';
+
+  @override
+  String get emailHint => 'Enter your Email';
+
+  @override
+  String get tellUsMoreLabel => 'Tell us more *';
+
+  @override
+  String get tellUsMoreHint => 'What did you like or dislike? Any\nsuggestions for improvement?';
+
+  @override
+  String get submitFeedbackButton => 'Submit Feedback';
+
+  @override
+  String get validationPleaseEnterEmail => 'Please enter your email';
+
+  @override
+  String get validationPleaseEnterValidEmail => 'Please enter a valid email';
+
+  @override
+  String get validationPleaseTellUsMore => 'Please tell us more';
+
+  @override
+  String get validationPleaseSelectRating => 'Please select a rating.';
+
+  @override
+  String get snackBarFeedbackSubmitted => 'Feedback submitted (mock)!';
+
+  @override
+  String get errorTellUsMore => 'Please tell us more';
+
+  @override
+  String get errorValidEmail => 'Please enter a valid email';
+
+  @override
+  String get feedbackSubmittedSuccess => 'Feedback submitted (mock)!';
+
+  @override
+  String get errorPleaseSelectRating => 'Please select a rating.';
 }
