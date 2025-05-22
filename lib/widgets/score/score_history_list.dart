@@ -32,7 +32,7 @@ class ScoreHistoryList extends StatelessWidget {
         final entry = rollHistory[index];
         final formattedDate = DateFormat.yMMMd(
           localizations.localeName,
-        ).add_jm().format(entry.timestamp);
+        ).add_Hm().format(entry.timestamp);
 
         return Padding(
           padding: const EdgeInsets.only(bottom: 24.0),
