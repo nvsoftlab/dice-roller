@@ -145,4 +145,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get feedbackApiError => 'Failed to submit feedback. Please try again later.';
+
+  @override
+  String get settingsTermsOfUse => 'Terms of Use';
+
+  @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
 }

@@ -1,10 +1,17 @@
+import 'package:dice_roller/constants/config.dart';
 import 'package:dice_roller/l10n/app_localizations.dart';
 import 'package:dice_roller/widgets/settings/feedback_modal.dart';
 import 'package:dice_roller/widgets/settings/settings_section_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FeedbackSection extends StatelessWidget {
   const FeedbackSection({super.key});
+
+  Future<void> _launchUrl(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    await launchUrl(url);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +71,25 @@ class FeedbackSection extends StatelessWidget {
             }),
           ),
           const SizedBox(height: 8),
+          TextButton(
+            onPressed: () => _launchUrl(kTermsOfUseUrl),
+            child: Text(
+              localizations.settingsTermsOfUse,
+              style: theme.textTheme.labelMedium!.copyWith(
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => _launchUrl(kPrivacyPolicyUrl),
+            child: Text(
+              localizations.settingsPrivacyPolicy,
+              style: theme.textTheme.labelMedium!.copyWith(
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+          SizedBox(height: 12),
           Center(
             child: Text('Dice App: V1.0.0', style: theme.textTheme.labelMedium),
           ),

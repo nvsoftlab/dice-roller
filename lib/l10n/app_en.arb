@@ -61,5 +61,7 @@
   "validationPleaseTellUsMore": "Please tell us more",
   "feedbackSubmittedSnackbar": "Thank you for your feedback! It helps us to improve the app.",
   "ratingRequiredError": "Please select a rating",
-  "feedbackApiError": "Failed to submit feedback. Please try again later." 
+  "feedbackApiError": "Failed to submit feedback. Please try again later.",
+  "settingsTermsOfUse": "Terms of Use",
+  "settingsPrivacyPolicy": "Privacy Policy"
 }
