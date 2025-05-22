@@ -2,6 +2,7 @@ import 'package:dice_roller/constants/shared_preferences_indexes.dart';
 import 'package:dice_roller/screens/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -86,6 +87,19 @@ const List<DeviceOrientation> deviceOrientations = [
 ];
 
 void main() async {
+  // Ensure that the Flutter framework is initialized.
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  // Preserve the splash screen until you manually remove it.
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  // Perform any asynchronous initialization tasks here.
+  // For example, load user data, fetch config, etc.
+  await Future.delayed(const Duration(seconds: 3)); // Simulate a delay
+
+  // Once your app is ready, remove the splash screen.
+  FlutterNativeSplash.remove();
+
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(deviceOrientations);
 
