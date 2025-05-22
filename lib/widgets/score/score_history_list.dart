@@ -26,7 +26,7 @@ class ScoreHistoryList extends StatelessWidget {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
       itemCount: rollHistory.length,
       itemBuilder: (context, index) {
         final entry = rollHistory[index];
