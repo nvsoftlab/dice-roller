@@ -420,7 +420,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeScreenFeature4Description.
   ///
   /// In en, this message translates to:
-  /// **'View your roll history by tapping the results icon on the left.'**
+  /// **'Check your roll history - view the last 20 results by tapping the results icon on the left.'**
   String get welcomeScreenFeature4Description;
 
   /// No description provided for @welcomeScreenLetsRollButton.

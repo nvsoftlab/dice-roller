@@ -177,7 +177,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcomeScreenFeature4Title => 'See rolls results';
 
   @override
-  String get welcomeScreenFeature4Description => 'View your roll history by tapping the results icon on the left.';
+  String get welcomeScreenFeature4Description => 'Check your roll history - view the last 20 results by tapping the results icon on the left.';
 
   @override
   String get welcomeScreenLetsRollButton => 'Let\'s Roll';
