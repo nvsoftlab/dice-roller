@@ -26,13 +26,13 @@ class ScoreHistoryList extends StatelessWidget {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
       itemCount: rollHistory.length,
       itemBuilder: (context, index) {
         final entry = rollHistory[index];
         final formattedDate = DateFormat.yMMMd(
           localizations.localeName,
-        ).add_jm().format(entry.timestamp);
+        ).add_Hm().format(entry.timestamp);
 
         return Padding(
           padding: const EdgeInsets.only(bottom: 24.0),
@@ -54,22 +54,26 @@ class ScoreHistoryList extends StatelessWidget {
                       itemCount: entry.individualRolls.length,
                       itemBuilder: (context, dieIndex) {
                         final dieRoll = entry.individualRolls[dieIndex];
-                        return Padding(
+                        return Container(
+                          width: 80,
                           padding: const EdgeInsets.only(right: 8.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "${dieRoll.type.getDisplayName(localizations)}:",
-                              ),
-                              const SizedBox(height: 4),
-                              MiniDiceWidget(
-                                type: dieRoll.type,
-                                value: dieRoll.value,
-                                size: 40,
-                              ),
-                            ],
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${dieRoll.type.getDisplayName(localizations)}:",
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 4),
+                                MiniDiceWidget(
+                                  type: dieRoll.type,
+                                  value: dieRoll.value,
+                                  size: 40,
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
