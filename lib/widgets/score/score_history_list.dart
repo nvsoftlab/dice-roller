@@ -54,22 +54,26 @@ class ScoreHistoryList extends StatelessWidget {
                       itemCount: entry.individualRolls.length,
                       itemBuilder: (context, dieIndex) {
                         final dieRoll = entry.individualRolls[dieIndex];
-                        return Padding(
+                        return Container(
+                          width: 80,
                           padding: const EdgeInsets.only(right: 8.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "${dieRoll.type.getDisplayName(localizations)}:",
-                              ),
-                              const SizedBox(height: 4),
-                              MiniDiceWidget(
-                                type: dieRoll.type,
-                                value: dieRoll.value,
-                                size: 40,
-                              ),
-                            ],
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${dieRoll.type.getDisplayName(localizations)}:",
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 4),
+                                MiniDiceWidget(
+                                  type: dieRoll.type,
+                                  value: dieRoll.value,
+                                  size: 40,
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
