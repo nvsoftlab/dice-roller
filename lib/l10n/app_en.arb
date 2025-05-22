@@ -61,5 +61,17 @@
   "validationPleaseTellUsMore": "Please tell us more",
   "feedbackSubmittedSnackbar": "Thank you for your feedback! It helps us to improve the app.",
   "ratingRequiredError": "Please select a rating",
-  "feedbackApiError": "Failed to submit feedback. Please try again later." 
+  "feedbackApiError": "Failed to submit feedback. Please try again later.",
+  "welcomeScreenTitle": "Welcome to DiceRoll",
+  "welcomeScreenSubtitle": "Your pocket dice simulator",
+  "welcomeScreenHowToUseTitle": "How to use the app:",
+  "welcomeScreenFeature1Title": "Set number of dices",
+  "welcomeScreenFeature1Description": "Want to roll more dice? Set your preferred number in Settings via the gear icon.",
+  "welcomeScreenFeature2Title": "Choose dice type",
+  "welcomeScreenFeature2Description": "Choose between d6-classic, d4, d6, d8, d10, d12 or d20 dice in Settings by tapping the gear icon.",
+  "welcomeScreenFeature3Title": "Shake to roll",
+  "welcomeScreenFeature3Description": "Simply shake your phone or tap the roll button to throw your dice.",
+  "welcomeScreenFeature4Title": "See rolls results",
+  "welcomeScreenFeature4Description": "View your roll history by tapping the results icon on the left.",
+  "welcomeScreenLetsRollButton": "Let's Roll"
 }

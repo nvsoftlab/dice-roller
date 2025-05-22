@@ -145,4 +145,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get feedbackApiError => 'Failed to submit feedback. Please try again later.';
+
+  @override
+  String get welcomeScreenTitle => 'Welcome to DiceRoll';
+
+  @override
+  String get welcomeScreenSubtitle => 'Your pocket dice simulator';
+
+  @override
+  String get welcomeScreenHowToUseTitle => 'How to use the app:';
+
+  @override
+  String get welcomeScreenFeature1Title => 'Set number of dices';
+
+  @override
+  String get welcomeScreenFeature1Description => 'Want to roll more dice? Set your preferred number in Settings via the gear icon.';
+
+  @override
+  String get welcomeScreenFeature2Title => 'Choose dice type';
+
+  @override
+  String get welcomeScreenFeature2Description => 'Choose between d6-classic, d4, d6, d8, d10, d12 or d20 dice in Settings by tapping the gear icon.';
+
+  @override
+  String get welcomeScreenFeature3Title => 'Shake to roll';
+
+  @override
+  String get welcomeScreenFeature3Description => 'Simply shake your phone or tap the roll button to throw your dice.';
+
+  @override
+  String get welcomeScreenFeature4Title => 'See rolls results';
+
+  @override
+  String get welcomeScreenFeature4Description => 'View your roll history by tapping the results icon on the left.';
+
+  @override
+  String get welcomeScreenLetsRollButton => 'Let\'s Roll';
 }

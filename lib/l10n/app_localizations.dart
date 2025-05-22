@@ -356,6 +356,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to submit feedback. Please try again later.'**
   String get feedbackApiError;
+
+  /// No description provided for @welcomeScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to DiceRoll'**
+  String get welcomeScreenTitle;
+
+  /// No description provided for @welcomeScreenSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pocket dice simulator'**
+  String get welcomeScreenSubtitle;
+
+  /// No description provided for @welcomeScreenHowToUseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How to use the app:'**
+  String get welcomeScreenHowToUseTitle;
+
+  /// No description provided for @welcomeScreenFeature1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set number of dices'**
+  String get welcomeScreenFeature1Title;
+
+  /// No description provided for @welcomeScreenFeature1Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Want to roll more dice? Set your preferred number in Settings via the gear icon.'**
+  String get welcomeScreenFeature1Description;
+
+  /// No description provided for @welcomeScreenFeature2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose dice type'**
+  String get welcomeScreenFeature2Title;
+
+  /// No description provided for @welcomeScreenFeature2Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose between d6-classic, d4, d6, d8, d10, d12 or d20 dice in Settings by tapping the gear icon.'**
+  String get welcomeScreenFeature2Description;
+
+  /// No description provided for @welcomeScreenFeature3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Shake to roll'**
+  String get welcomeScreenFeature3Title;
+
+  /// No description provided for @welcomeScreenFeature3Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Simply shake your phone or tap the roll button to throw your dice.'**
+  String get welcomeScreenFeature3Description;
+
+  /// No description provided for @welcomeScreenFeature4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'See rolls results'**
+  String get welcomeScreenFeature4Title;
+
+  /// No description provided for @welcomeScreenFeature4Description.
+  ///
+  /// In en, this message translates to:
+  /// **'View your roll history by tapping the results icon on the left.'**
+  String get welcomeScreenFeature4Description;
+
+  /// No description provided for @welcomeScreenLetsRollButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s Roll'**
+  String get welcomeScreenLetsRollButton;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
