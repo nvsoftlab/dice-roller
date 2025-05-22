@@ -46,12 +46,12 @@ class FeedbackFormFields extends StatelessWidget {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter your email';
+              return localizations.validationPleaseEnterEmail;
             }
             if (!RegExp(
               r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
             ).hasMatch(value)) {
-              return 'Please enter a valid email';
+              return localizations.validationPleaseEnterValidEmail;
             }
             return null;
           },
@@ -82,7 +82,7 @@ class FeedbackFormFields extends StatelessWidget {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please tell us more';
+              return localizations.validationPleaseTellUsMore;
             }
             return null;
           },

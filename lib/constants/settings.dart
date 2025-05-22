@@ -20,3 +20,10 @@ const List<Color> kColors = [
 const int kInitialDiceCount = 1;
 
 const int kMaxScoreHistoryLength = 20;
+
+const Map<String, String> kRating = {
+  'poor': 'poor',
+  'fair': 'fair',
+  'okay': 'okay',
+  'good': 'good',
+};

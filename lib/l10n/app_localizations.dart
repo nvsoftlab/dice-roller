@@ -309,41 +309,17 @@ abstract class AppLocalizations {
   /// **'Please tell us more'**
   String get validationPleaseTellUsMore;
 
-  /// No description provided for @validationPleaseSelectRating.
+  /// No description provided for @feedbackSubmittedSnackbar.
   ///
   /// In en, this message translates to:
-  /// **'Please select a rating.'**
-  String get validationPleaseSelectRating;
+  /// **'Thank you for your feedback! It helps us to improve the app.'**
+  String get feedbackSubmittedSnackbar;
 
-  /// No description provided for @snackBarFeedbackSubmitted.
+  /// No description provided for @ratingRequiredError.
   ///
   /// In en, this message translates to:
-  /// **'Feedback submitted (mock)!'**
-  String get snackBarFeedbackSubmitted;
-
-  /// No description provided for @errorTellUsMore.
-  ///
-  /// In en, this message translates to:
-  /// **'Please tell us more'**
-  String get errorTellUsMore;
-
-  /// No description provided for @errorValidEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter a valid email'**
-  String get errorValidEmail;
-
-  /// No description provided for @feedbackSubmittedSuccess.
-  ///
-  /// In en, this message translates to:
-  /// **'Feedback submitted (mock)!'**
-  String get feedbackSubmittedSuccess;
-
-  /// No description provided for @errorPleaseSelectRating.
-  ///
-  /// In en, this message translates to:
-  /// **'Please select a rating.'**
-  String get errorPleaseSelectRating;
+  /// **'Please select a rating'**
+  String get ratingRequiredError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -54,11 +54,6 @@
   "validationPleaseEnterEmail": "Please enter your email",
   "validationPleaseEnterValidEmail": "Please enter a valid email",
   "validationPleaseTellUsMore": "Please tell us more",
-  "validationPleaseSelectRating": "Please select a rating.",
-  "snackBarFeedbackSubmitted": "Feedback submitted (mock)!",
-  "errorTellUsMore": "Please tell us more",
-  "errorValidEmail": "Please enter a valid email",
-  "feedbackSubmittedSuccess": "Feedback submitted (mock)!",
-  "errorPleaseSelectRating": "Please select a rating."
-
+  "feedbackSubmittedSnackbar": "Thank you for your feedback! It helps us to improve the app.",
+  "ratingRequiredError": "Please select a rating"
 }

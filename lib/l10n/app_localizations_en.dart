@@ -123,20 +123,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get validationPleaseTellUsMore => 'Please tell us more';
 
   @override
-  String get validationPleaseSelectRating => 'Please select a rating.';
+  String get feedbackSubmittedSnackbar => 'Thank you for your feedback! It helps us to improve the app.';
 
   @override
-  String get snackBarFeedbackSubmitted => 'Feedback submitted (mock)!';
-
-  @override
-  String get errorTellUsMore => 'Please tell us more';
-
-  @override
-  String get errorValidEmail => 'Please enter a valid email';
-
-  @override
-  String get feedbackSubmittedSuccess => 'Feedback submitted (mock)!';
-
-  @override
-  String get errorPleaseSelectRating => 'Please select a rating.';
+  String get ratingRequiredError => 'Please select a rating';
 }

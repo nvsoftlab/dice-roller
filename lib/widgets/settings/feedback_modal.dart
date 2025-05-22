@@ -1,3 +1,4 @@
+import 'package:dice_roller/constants/settings.dart';
 import 'package:dice_roller/l10n/app_localizations.dart';
 import 'package:dice_roller/widgets/settings/feedback_form_fields.dart';
 import 'package:dice_roller/widgets/settings/feedback_submit_button.dart';
@@ -34,6 +35,7 @@ class _FeedbackModalState extends State<FeedbackModal> {
   }
 
   void _submitFeedback() {
+    final localizations = AppLocalizations.of(context)!;
     final isFormValid = _formKey.currentState!.validate();
     final isRatingSelected = _selectedRating != null;
 
@@ -45,13 +47,13 @@ class _FeedbackModalState extends State<FeedbackModal> {
       print('Rating: $_selectedRating');
       print('Email: ${_emailController.text}');
       print('Feedback: ${_feedbackController.text}');
-      Navigator.of(context).pop(); // Close the dialog
+      Navigator.of(context).pop();
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text(
-            'Feedback submitted!',
-            style: TextStyle(
+          content: Text(
+            localizations.feedbackSubmittedSnackbar,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.w500,
@@ -65,7 +67,7 @@ class _FeedbackModalState extends State<FeedbackModal> {
             borderRadius: BorderRadius.circular(16),
           ),
           elevation: 8,
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
     }
@@ -127,33 +129,29 @@ class _FeedbackModalState extends State<FeedbackModal> {
                       label: localizations.ratingPoor,
                       iconData: Icons.sentiment_very_dissatisfied,
                       color: Colors.red,
-                      isSelected: _selectedRating == localizations.ratingPoor,
-                      onTap:
-                          () => _handleRatingSelected(localizations.ratingPoor),
+                      isSelected: _selectedRating == kRating['poor']!,
+                      onTap: () => _handleRatingSelected(kRating['poor']!),
                     ),
                     RatingOption(
                       label: localizations.ratingFair,
                       iconData: Icons.sentiment_dissatisfied,
                       color: Colors.orange,
-                      isSelected: _selectedRating == localizations.ratingFair,
-                      onTap:
-                          () => _handleRatingSelected(localizations.ratingFair),
+                      isSelected: _selectedRating == kRating['fair']!,
+                      onTap: () => _handleRatingSelected(kRating['fair']!),
                     ),
                     RatingOption(
                       label: localizations.ratingOkay,
                       iconData: Icons.sentiment_satisfied,
                       color: Colors.amber,
-                      isSelected: _selectedRating == localizations.ratingOkay,
-                      onTap:
-                          () => _handleRatingSelected(localizations.ratingOkay),
+                      isSelected: _selectedRating == kRating['okay']!,
+                      onTap: () => _handleRatingSelected(kRating['okay']!),
                     ),
                     RatingOption(
                       label: localizations.ratingGood,
                       iconData: Icons.sentiment_very_satisfied,
                       color: Colors.green,
-                      isSelected: _selectedRating == localizations.ratingGood,
-                      onTap:
-                          () => _handleRatingSelected(localizations.ratingGood),
+                      isSelected: _selectedRating == kRating['good']!,
+                      onTap: () => _handleRatingSelected(kRating['good']!),
                     ),
                   ],
                 ),
@@ -161,10 +159,9 @@ class _FeedbackModalState extends State<FeedbackModal> {
                   Padding(
                     padding: EdgeInsets.only(left: 12.0, top: 8.0),
                     child: Text(
-                      'Please select a rating',
-                      style: TextStyle(
+                      localizations.ratingRequiredError,
+                      style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.error,
-                        fontSize: 12,
                       ),
                     ),
                   ),
