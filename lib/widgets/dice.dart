@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:async'; // Import for Completer
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:dice_roller/models/dice_type.dart';
 
@@ -13,7 +13,7 @@ class Dice extends StatefulWidget {
 
   final double size;
   final DiceType type;
-  final VoidCallback? onRollComplete; // Optional callback
+  final VoidCallback? onRollComplete;
 
   @override
   State<Dice> createState() => DiceState();
@@ -27,7 +27,7 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
   late Animation<double> _rotationAnimation;
   late Animation<double> _counterRotationAnimation;
   int _finalDiceFace = 1;
-  Completer<int>? _rollCompleter; // Completer to signal roll completion
+  Completer<int>? _rollCompleter;
   bool _isRolling = false;
 
   @override
@@ -82,9 +82,10 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
   // Modified to return a Future that completes with the final value
   Future<int> rollDice() {
     if (_isRolling) {
-      // If already rolling, return the existing future or a new one indicating current state
-      // For simplicity, let's just return a future that completes immediately with the current face
-      return Future.value(_isRolling ? _currentDiceFace : _finalDiceFace);
+      if (_rollCompleter != null) {
+        return _rollCompleter!.future;
+      }
+      return Future.value(_finalDiceFace);
     }
 
     _rollCompleter = Completer<int>(); // Create a new completer
@@ -111,8 +112,12 @@ class DiceState extends State<Dice> with SingleTickerProviderStateMixin {
 
   Widget _buildDiceFace(int value) {
     switch (widget.type) {
+      case DiceType.d4:
       case DiceType.d6:
+      case DiceType.d8:
       case DiceType.d10:
+      case DiceType.d12:
+      case DiceType.d20:
         return _buildNumericDiceFace(value);
       case DiceType.d6Classic:
         return _buildClassicDiceFace(value);

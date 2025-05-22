@@ -179,6 +179,9 @@ class _DiceScreenState extends State<DiceScreen> {
 
     if (mounted) {
       await _reloadDataAndUpdateState();
+      if (_isScreenVisible) {
+        _startAccelerometerListener();
+      }
     }
   }
 
@@ -210,7 +213,10 @@ class _DiceScreenState extends State<DiceScreen> {
     );
 
     if (mounted) {
-      await _reloadDataAndUpdateState(); // Reload data if necessary
+      await _reloadDataAndUpdateState();
+      if (_isScreenVisible) {
+        _startAccelerometerListener();
+      }
     }
   }
 
