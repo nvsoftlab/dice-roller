@@ -181,4 +181,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get welcomeScreenLetsRollButton => 'Let\'s Roll';
+
+  @override
+  String get settingsTermsOfUse => 'Terms of Use';
+
+  @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
 }
