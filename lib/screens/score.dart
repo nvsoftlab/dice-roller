@@ -19,6 +19,7 @@ class ScoreScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(localizations.scoreScreenTitle),
         backgroundColor: theme.primaryColor,
+        scrolledUnderElevation: 0.0,
       ),
       body: ScoreHistoryList(rollHistory: rollHistory),
     );

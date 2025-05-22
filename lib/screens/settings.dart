@@ -18,7 +18,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: Text(localizations.settingsScreenTitle)),
+      appBar: AppBar(
+        title: Text(localizations.settingsScreenTitle),
+        scrolledUnderElevation: 0.0,
+      ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
         child: ListView(
