@@ -1,0 +1,79 @@
+{
+    "@@locale": "uk",
+    "settingsScreenTitle": "Налаштування",
+    "settingsAppearanceBgColor": "Колір тла",
+    "settingsAppearanceTitle": "Вигляд",
+    "settingsDiceSettingsTitle": "Налаштування кубиків",
+    "settingsNumberOfDices": "Кількість кубиків",
+    "settingsGeneralTitle": "Загальні",
+    "settingsSoundEffects": "Звукові ефекти",
+    "settingsVibration": "Вібрація",
+    "settingsKeepScreenOn": "Не вимикати екран",
+    "settingsFeedbackTitle": "Відгук",
+    "settingsSendFeedback": "Надіслати відгук",
+    "settingsRateThisApp": "Оцінити цю програму",
+    "settingsDiceXType": "Тип кубика {diceNumber}",
+    "@settingsDiceXType": {
+      "description": "Label for individual dice type selection, e.g., 'Dice 1 Type'",
+      "placeholders": {
+        "diceNumber": {
+          "type": "int",
+          "example": "1"
+        }
+      }
+    },
+    "diceScreenYourScoreX": "Ваш результат: {score}",
+    "@diceScreenYourScoreX": {
+      "description": "'Your Score: 5'",
+      "placeholders": {
+        "score": {
+          "type": "int",
+          "example": "1"
+        }
+      }
+    },
+    "diceRollButtonText": "Кинути",
+    "diceTypeD6Classic": "D6 Класичний",
+    "diceTypeD4": "D4",
+    "diceTypeD6": "D6",
+    "diceTypeD8": "D8",
+    "diceTypeD10": "D10",
+    "diceTypeD12": "D12",
+    "diceTypeD20": "D20",
+    "settingsSelectOption": "Виберіть опцію",
+    "scoreScreenTitle": "Історія результатів",
+    "scoreScreenNoRolls": "Жодного кидка ще не записано.",
+    "scoreScreenTotalScore": "Всього: {score}",
+    "modalShareFeedbackTitle": "Поділіться своїм відгуком",
+    "modalRatingQuestion": "Як би ви оцінили свій досвід\nвикористання Dice Roller?",
+    "ratingPoor": "Погано",
+    "ratingFair": "Задовільно",
+    "ratingOkay": "Нормально",
+    "ratingGood": "Добре",
+    "emailLabel": "Електронна пошта *",
+    "emailHint": "Введіть свою електронну пошту",
+    "tellUsMoreLabel": "Розкажіть нам більше *",
+    "tellUsMoreHint": "Що вам сподобалось чи не сподобалось? Є пропозиції щодо покращення?",
+    "submitFeedbackButton": "Надіслати відгук",
+    "submittingFeedbackButton": "Відправлення...",
+    "validationPleaseEnterEmail": "Будь ласка, введіть вашу електронну пошту",
+    "validationPleaseEnterValidEmail": "Будь ласка, введіть дійсну електронну пошту",
+    "validationPleaseTellUsMore": "Будь ласка, розкажіть більше",
+    "feedbackSubmittedSnackbar": "Дякуємо за ваш відгук! Це допомагає нам покращувати додаток.",
+    "ratingRequiredError": "Будь ласка, виберіть оцінку",
+    "feedbackApiError": "Не вдалося надіслати відгук. Будь ласка, спробуйте пізніше.",
+    "welcomeScreenTitle": "Ласкаво просимо до DiceRoll",
+    "welcomeScreenSubtitle": "Ваш кишеньковий симулятор кубиків",
+    "welcomeScreenHowToUseTitle": "Як користуватися програмою:",
+    "welcomeScreenFeature1Title": "Встановити кількість кубиків",
+    "welcomeScreenFeature1Description": "Хочете кидати більше кубиків? Встановіть бажану кількість у Налаштуваннях за допомогою значка шестерні.",
+    "welcomeScreenFeature2Title": "Вибрати тип кубика",
+    "welcomeScreenFeature2Description": "Виберіть між класичними кубиками d6, d4, d6, d8, d10, d12 або d20 у Налаштуваннях, натиснувши на значок шестерні.",
+    "welcomeScreenFeature3Title": "Струсіть, щоб кинути",
+    "welcomeScreenFeature3Description": "Просто струсіть телефон або натисніть кнопку кидка, щоб кинути кубики.",
+    "welcomeScreenFeature4Title": "Переглянути результати кидків",
+    "welcomeScreenFeature4Description": "Перевірте історію своїх кидків – перегляньте останні 20 результатів, натиснувши на значок результатів ліворуч.",
+    "welcomeScreenLetsRollButton": "Почнімо",
+    "settingsTermsOfUse": "Умови використання",
+    "settingsPrivacyPolicy": "Політика конфіденційності"
+}

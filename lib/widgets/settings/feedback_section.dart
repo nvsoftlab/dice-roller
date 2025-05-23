@@ -8,8 +8,17 @@ import 'package:url_launcher/url_launcher.dart';
 class FeedbackSection extends StatelessWidget {
   const FeedbackSection({super.key});
 
-  Future<void> _launchUrl(String urlString) async {
-    final Uri url = Uri.parse(urlString);
+  Future<void> _launchUrl(String urlString, String? localeLanguageCode) async {
+    Uri url = Uri.parse(urlString);
+
+    if (localeLanguageCode == 'uk') {
+      url = url.replace(queryParameters: {'lang': 'ua'});
+    }
+
+    if (localeLanguageCode == 'pl') {
+      url = url.replace(queryParameters: {'lang': localeLanguageCode});
+    }
+
     await launchUrl(url);
   }
 
@@ -17,6 +26,8 @@ class FeedbackSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final currentLocaleLanguageCode =
+        Localizations.localeOf(context).languageCode;
 
     return SettingsSectionLayout(
       title: localizations.settingsFeedbackTitle,
@@ -72,7 +83,8 @@ class FeedbackSection extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           TextButton(
-            onPressed: () => _launchUrl(kTermsOfUseUrl),
+            onPressed:
+                () => _launchUrl(kTermsOfUseUrl, currentLocaleLanguageCode),
             child: Text(
               localizations.settingsTermsOfUse,
               style: theme.textTheme.labelMedium!.copyWith(
@@ -81,7 +93,8 @@ class FeedbackSection extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () => _launchUrl(kPrivacyPolicyUrl),
+            onPressed:
+                () => _launchUrl(kPrivacyPolicyUrl, currentLocaleLanguageCode),
             child: Text(
               localizations.settingsPrivacyPolicy,
               style: theme.textTheme.labelMedium!.copyWith(
@@ -89,7 +102,7 @@ class FeedbackSection extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Center(
             child: Text('Dice App: V1.0.0', style: theme.textTheme.labelMedium),
           ),
