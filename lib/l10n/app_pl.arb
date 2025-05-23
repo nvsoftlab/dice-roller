@@ -1,0 +1,79 @@
+{
+    "@@locale": "pl",
+    "settingsScreenTitle": "Ustawienia",
+    "settingsAppearanceBgColor": "Kolor tła",
+    "settingsAppearanceTitle": "Wygląd",
+    "settingsDiceSettingsTitle": "Ustawienia kości",
+    "settingsNumberOfDices": "Liczba kości",
+    "settingsGeneralTitle": "Ogólne",
+    "settingsSoundEffects": "Efekty dźwiękowe",
+    "settingsVibration": "Wibracje",
+    "settingsKeepScreenOn": "Nie wygaszaj ekranu",
+    "settingsFeedbackTitle": "Opinia",
+    "settingsSendFeedback": "Wyślij opinię",
+    "settingsRateThisApp": "Oceń tę aplikację",
+    "settingsDiceXType": "Typ kości {diceNumber}",
+    "@settingsDiceXType": {
+      "description": "Label for individual dice type selection, e.g., 'Dice 1 Type'",
+      "placeholders": {
+        "diceNumber": {
+          "type": "int",
+          "example": "1"
+        }
+      }
+    },
+    "diceScreenYourScoreX": "Twój wynik: {score}",
+    "@diceScreenYourScoreX": {
+      "description": "'Your Score: 5'",
+      "placeholders": {
+        "score": {
+          "type": "int",
+          "example": "1"
+        }
+      }
+    },
+    "diceRollButtonText": "Rzuć",
+    "diceTypeD6Classic": "K6 Klasyczna",
+    "diceTypeD4": "K4",
+    "diceTypeD6": "K6",
+    "diceTypeD8": "K8",
+    "diceTypeD10": "K10",
+    "diceTypeD12": "K12",
+    "diceTypeD20": "K20",
+    "settingsSelectOption": "Wybierz opcję",
+    "scoreScreenTitle": "Historia wyników",
+    "scoreScreenNoRolls": "Brak zarejestrowanych rzutów.",
+    "scoreScreenTotalScore": "Suma: {score}",
+    "modalShareFeedbackTitle": "Podziel się swoją opinią",
+    "modalRatingQuestion": "Jak oceniasz swoje doświadczenie\nz aplikacją Dice Roller?",
+    "ratingPoor": "Słabo",
+    "ratingFair": "Umiarkowanie",
+    "ratingOkay": "W porządku",
+    "ratingGood": "Dobrze",
+    "emailLabel": "E-mail *",
+    "emailHint": "Wpisz swój adres e-mail",
+    "tellUsMoreLabel": "Powiedz nam więcej *",
+    "tellUsMoreHint": "Co Ci się podobało lub nie? Jakieś sugestie dotyczące ulepszeń?",
+    "submitFeedbackButton": "Wyślij opinię",
+    "submittingFeedbackButton": "Wysyłanie...",
+    "validationPleaseEnterEmail": "Proszę podać adres e-mail",
+    "validationPleaseEnterValidEmail": "Proszę podać prawidłowy adres e-mail",
+    "validationPleaseTellUsMore": "Proszę opisać więcej",
+    "feedbackSubmittedSnackbar": "Dziękujemy za Twoją opinię! Pomaga nam to ulepszać aplikację.",
+    "ratingRequiredError": "Proszę wybrać ocenę",
+    "feedbackApiError": "Nie udało się wysłać opinii. Spróbuj ponownie później.",
+    "welcomeScreenTitle": "Witaj w DiceRoll",
+    "welcomeScreenSubtitle": "Twój kieszonkowy symulator kości",
+    "welcomeScreenHowToUseTitle": "Jak korzystać z aplikacji:",
+    "welcomeScreenFeature1Title": "Ustaw liczbę kości",
+    "welcomeScreenFeature1Description": "Chcesz rzucić więcej kości? Ustaw preferowaną liczbę w Ustawieniach za pomocą ikony zębatki.",
+    "welcomeScreenFeature2Title": "Wybierz typ kości",
+    "welcomeScreenFeature2Description": "Wybierz kości d6-klasyczne, d4, d6, d8, d10, d12 lub d20 w Ustawieniach, dotykając ikony zębatki.",
+    "welcomeScreenFeature3Title": "Potrząśnij, aby rzucić",
+    "welcomeScreenFeature3Description": "Po prostu potrząśnij telefonem lub dotknij przycisku rzutu, aby rzucić kości.",
+    "welcomeScreenFeature4Title": "Zobacz wyniki rzutów",
+    "welcomeScreenFeature4Description": "Sprawdź historię swoich rzutów – przeglądaj 20 ostatnich wyników, dotykając ikony wyników po lewej stronie.",
+    "welcomeScreenLetsRollButton": "Zaczynajmy",
+    "settingsTermsOfUse": "Warunki użytkowania",
+    "settingsPrivacyPolicy": "Polityka prywatności"
+}
