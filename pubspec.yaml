@@ -53,13 +53,20 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 flutter_native_splash:
-  color: "#FFFFFF"
-  image: assets/icons/app_icon.png # Corrected: Removed the extra double quote
+  color: "#7C4DFF"
+  image: assets/icons/app_icon.png
+  # Add the following for Android 12+ adaptive icon support
+  android_12:
+    image: assets/icons/android12_splash_icon.png 
+    color: "#7C4DFF"
+
 
 flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/icons/app_icon.png" 
+  adaptive_icon_foreground: "assets/icons/splash_icon_foreground.png"
+  adaptive_icon_background: "#7C4DFF" # Your desired purple color
 
 # The following section is specific to Flutter packages.
 flutter:
