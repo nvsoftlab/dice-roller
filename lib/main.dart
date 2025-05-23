@@ -100,7 +100,6 @@ void main() async {
   // Once your app is ready, remove the splash screen.
   FlutterNativeSplash.remove();
 
-  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(deviceOrientations);
 
   final preferences = await SharedPreferences.getInstance();
