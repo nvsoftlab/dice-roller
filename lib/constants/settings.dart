@@ -11,7 +11,7 @@ const List<String> kDiceTypeOptions = [
 ];
 
 const List<Color> kColors = [
-  Color(0xFFA299FE),
+  Colors.deepPurpleAccent,
   Color(0xFF000000),
   Color(0xFF6A1B9A),
   Color(0xFFD84315),
